@@ -6,20 +6,14 @@
 <title>دعوتنامه VIP</title>
 
 <style>
-
 body{
     margin:0;
     padding:0;
     overflow:hidden;
-    font-family:tahoma;
+    font-family:tahoma,sans-serif;
     text-align:center;
     color:white;
-
-    background:
-    radial-gradient(circle at top,
-    #2b1b10,
-    #000000,
-    #3a2a1a);
+    background:radial-gradient(circle at top,#2b1b10,#000000,#3a2a1a);
 }
 
 /* ذرات نور */
@@ -40,147 +34,68 @@ body{
     background:gold;
     border-radius:50%;
     animation:move 10s linear infinite;
-    opacity:0.6;
+    opacity:.6;
 }
 
 @keyframes move{
-
-    from{
-        transform:
-        translateY(100vh)
-        scale(0.5);
-
-        opacity:0;
-    }
-
-    to{
-        transform:
-        translateY(-10vh)
-        scale(1.2);
-
-        opacity:1;
-    }
+    from{transform:translateY(100vh) scale(.5);opacity:0;}
+    to{transform:translateY(-10vh) scale(1.2);opacity:1;}
 }
 
 /* متن هولوگرام */
 .name{
-
     font-size:22px;
-
     margin-top:60px;
-
     font-weight:bold;
-
     color:#e8f6ff;
-
-    text-shadow:
-        0 0 5px #8be9fd,
-        0 0 10px #8be9fd,
-        0 0 20px #00e5ff,
-        0 0 40px rgba(0,229,255,0.6);
-
-    animation:
-    hologram 2s infinite alternate;
-
     min-height:40px;
+    text-shadow:0 0 5px #8be9fd,0 0 10px #8be9fd,0 0 20px #00e5ff;
+    animation:hologram 2s infinite alternate;
 }
 
 @keyframes hologram{
-
-    from{
-        text-shadow:
-            0 0 5px #8be9fd,
-            0 0 10px #00e5ff,
-            0 0 20px #00e5ff;
-    }
-
-    to{
-        text-shadow:
-            0 0 10px #fff,
-            0 0 20px #00e5ff,
-            0 0 40px #00e5ff,
-            0 0 60px rgba(0,229,255,0.8);
-    }
+    from{ text-shadow:0 0 5px #8be9fd,0 0 10px #00e5ff,0 0 20px #00e5ff; }
+    to{ text-shadow:0 0 10px #fff,0 0 20px #00e5ff,0 0 40px #00e5ff; }
 }
 
-/* زیر متن */
 .sub{
-
     margin-top:10px;
-
     font-size:16px;
-
     color:#ddd;
-
     opacity:0;
-
-    animation:
-    fadeSub 2s 3s forwards;
+    animation:fadeSub 2s 3s forwards;
 }
 
-@keyframes fadeSub{
-
-    to{
-        opacity:1;
-    }
-}
+@keyframes fadeSub{to{opacity:1;}}
 
 /* ویدیو */
 video{
-
     width:95%;
-
     max-width:600px;
-
     margin-top:30px;
-
     border-radius:15px;
-
-    box-shadow:
-        0 0 20px rgba(255,215,0,0.1),
-        0 0 40px rgba(255,215,0,0.15);
-
     opacity:0;
-
-    animation:
-    fadeVideo 2s 5s forwards;
+    animation:fadeVideo 2s 5s forwards;
 }
 
-@keyframes fadeVideo{
-
-    to{
-        opacity:1;
-    }
-}
+@keyframes fadeVideo{to{opacity:1;}}
 
 /* برند */
 .signature{
-
     position:fixed;
-
     bottom:10px;
-
     right:15px;
-
     font-size:11px;
-
-    color:
-    rgba(255,255,255,0.25);
-
+    color:rgba(255,255,255,0.25);
     letter-spacing:1px;
-
-    z-index:999;
-
+    z-index:9999;
     user-select:none;
+    cursor:pointer;
 }
 
-body,html{
-    overflow-x:hidden;
-}
-
+body,html{overflow-x:hidden;}
 </style>
 </head>
-
 <body>
 
 <!-- ذرات -->
@@ -190,7 +105,7 @@ body,html{
 <div class="name" id="guestName"></div>
 
 <div class="sub">
-با حضورتان دراین محفل شادی، ما را مفتخر نمائید.
+با حضورتان در این محفل شادی، ما را مفتخر نمائید.
 </div>
 
 <!-- ویدیو -->
@@ -199,184 +114,117 @@ body,html{
 </video>
 
 <!-- برند -->
-<div class="signature" id="adminLogo">
-AminSystem2000
-</div>
+<div class="signature" id="adminLogo">AminSystem2000</div>
 
+<script src="guests.js"></script>
 <script>
+const ADMIN_HASH = "QW1pbjIwMDA=";
 
-/* شمارنده بازدید */
+const params = new URLSearchParams(window.location.search);
+const guestId = params.get("id") || "unknown";
 
-let views =
-localStorage.getItem("views")
-|| 0;
+const name = (typeof guests !== "undefined" && guests[guestId])
+    ? guests[guestId]
+    : "مهمان ویژه";
 
-/* محدودیت */
+const viewKey = "views_" + guestId;
+
+let views = parseInt(localStorage.getItem(viewKey) || "0");
+let expired = false;
 
 if(views >= 10){
+    expired = true;
 
-    document.body.innerHTML += `
-
-    <div id="expiredMessage" style="
-    position:fixed;
-    top:0;
-    left:0;
-    width:100%;
-    height:100%;
-    background:black;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    color:white;
-    font-size:24px;
-    z-index:999;
-    ">
-
-    لینک منقضی شده است
-
-    </div>
-
-    `;
-
+    document.body.insertAdjacentHTML("beforeend",`
+        <div id="expiredMessage" style="
+        position:fixed;
+        inset:0;
+        background:rgba(0,0,0,.92);
+        display:flex;
+        flex-direction:column;
+        justify-content:center;
+        align-items:center;
+        color:white;
+        text-align:center;
+        z-index:500;">
+            <div style="font-size:24px;">لینک منقضی شده است</div>
+            <div style="margin-top:15px;font-size:13px;color:#aaa;">
+                جهت مدیریت روی لوگوی پایین صفحه کلیک کنید
+            </div>
+        </div>
+    `);
 }else{
-
-    localStorage.setItem(
-    "views",
-    Number(views)+1
-    );
+    localStorage.setItem(viewKey, views + 1);
 }
 
-/* گرفتن اسم */
-
-const params =
-new URLSearchParams(
-window.location.search
-);
-
-let name =
-params.get("name")
-|| "مهمان عزیز";
-
-/* تایپ سینمایی */
-
-let text =
-"خدمت خانواده محترم "
-+ name;
-
+let text = "خدمت خانواده محترم " + name;
 let i = 0;
 
 function typeWriter(){
-
     if(i < text.length){
-
-        document
-        .getElementById(
-        "guestName"
-        )
-        .innerHTML +=
-        text.charAt(i);
-
+        document.getElementById("guestName").textContent += text.charAt(i);
         i++;
-
-        setTimeout(
-        typeWriter,
-        70
-        );
+        setTimeout(typeWriter,70);
     }
 }
-
-/* ذرات */
 
 function createParticles(){
-
-    const container =
-    document.getElementById(
-    "particles"
-    );
+    const container = document.getElementById("particles");
+    container.innerHTML = "";
 
     for(let i=0;i<40;i++){
-
-        let span =
-        document.createElement(
-        "span"
-        );
-
-        span.style.left =
-        Math.random()*100
-        + "vw";
-
-        span.style.animationDuration =
-        (5 + Math.random()*5)
-        + "s";
-
-        span.style.opacity =
-        Math.random();
-
-        container.appendChild(
-        span
-        );
+        const span = document.createElement("span");
+        span.style.left = Math.random()*100 + "vw";
+        span.style.animationDuration = (5 + Math.random()*5) + "s";
+        span.style.opacity = Math.random();
+        container.appendChild(span);
     }
 }
 
-/* پنل مخفی مدیر */
+const video = document.getElementById("video");
+
+video.addEventListener("error",()=>{
+    video.insertAdjacentHTML("afterend",
+    '<div style="color:#ffcc66;margin-top:15px">فایل ویدیو یافت نشد</div>');
+});
 
 let tapCount = 0;
 
-document
-.getElementById("adminLogo")
-.addEventListener("click", () => {
-
+document.getElementById("adminLogo").addEventListener("click",()=>{
     tapCount++;
 
     if(tapCount >= 7){
 
-        let pass =
-        prompt("رمز مدیریت");
+        const pass = prompt("رمز مدیریت");
 
-        if(pass === "Amin2000"){
+        if(btoa(pass || "") === ADMIN_HASH){
 
-            localStorage.removeItem(
-            "views"
-            );
+            localStorage.removeItem(viewKey);
 
-            alert(
-            "شمارنده ریست شد"
-            );
+            alert("شمارنده این مهمان ریست شد");
+
+            location.reload();
 
         }else{
-
-            alert(
-            "رمز اشتباه است"
-            );
+            alert("رمز اشتباه است");
         }
 
         tapCount = 0;
     }
 });
 
-/* شروع */
-
-window.onload = () => {
+window.onload = ()=>{
 
     createParticles();
 
-    setTimeout(() => {
+    if(!expired){
+        setTimeout(typeWriter,1000);
 
-        typeWriter();
-
-    },1000);
-
-    setTimeout(() => {
-
-        document
-        .getElementById(
-        "video"
-        )
-        .play();
-
-    },5000);
+        setTimeout(()=>{
+            video.play().catch(()=>{});
+        },5000);
+    }
 };
-
 </script>
 
 </body>
