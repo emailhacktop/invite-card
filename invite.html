@@ -6,6 +6,7 @@
 <title>دعوتنامه VIP</title>
 
 <style>
+
 body{
     margin:0;
     padding:0;
@@ -43,22 +44,33 @@ body{
 }
 
 @keyframes move{
+
     from{
-        transform:translateY(100vh) scale(0.5);
+        transform:
+        translateY(100vh)
+        scale(0.5);
+
         opacity:0;
     }
 
     to{
-        transform:translateY(-10vh) scale(1.2);
+        transform:
+        translateY(-10vh)
+        scale(1.2);
+
         opacity:1;
     }
 }
 
 /* متن هولوگرام */
 .name{
+
     font-size:22px;
+
     margin-top:60px;
+
     font-weight:bold;
+
     color:#e8f6ff;
 
     text-shadow:
@@ -67,7 +79,8 @@ body{
         0 0 20px #00e5ff,
         0 0 40px rgba(0,229,255,0.6);
 
-    animation:hologram 2s infinite alternate;
+    animation:
+    hologram 2s infinite alternate;
 
     min-height:40px;
 }
@@ -92,14 +105,21 @@ body{
 
 /* زیر متن */
 .sub{
+
     margin-top:10px;
+
     font-size:16px;
+
     color:#ddd;
+
     opacity:0;
-    animation:fadeSub 2s 3s forwards;
+
+    animation:
+    fadeSub 2s 3s forwards;
 }
 
 @keyframes fadeSub{
+
     to{
         opacity:1;
     }
@@ -107,9 +127,13 @@ body{
 
 /* ویدیو */
 video{
+
     width:95%;
+
     max-width:600px;
+
     margin-top:30px;
+
     border-radius:15px;
 
     box-shadow:
@@ -117,10 +141,13 @@ video{
         0 0 40px rgba(255,215,0,0.15);
 
     opacity:0;
-    animation:fadeVideo 2s 5s forwards;
+
+    animation:
+    fadeVideo 2s 5s forwards;
 }
 
 @keyframes fadeVideo{
+
     to{
         opacity:1;
     }
@@ -128,23 +155,29 @@ video{
 
 /* برند */
 .signature{
+
     position:fixed;
+
     bottom:10px;
+
     right:15px;
 
     font-size:11px;
 
-    color:rgba(255,255,255,0.25);
+    color:
+    rgba(255,255,255,0.25);
 
     letter-spacing:1px;
 
     z-index:999;
+
+    user-select:none;
 }
 
-/* جلوگیری از اسکرول */
 body,html{
     overflow-x:hidden;
 }
+
 </style>
 </head>
 
@@ -166,26 +199,35 @@ body,html{
 </video>
 
 <!-- برند -->
-<div class="signature">
+<div class="signature" id="adminLogo">
 AminSystem2000
 </div>
 
 <script>
 
-/* محدودیت 10 بار روی همان دستگاه */
-let views = localStorage.getItem("views") || 0;
+/* شمارنده بازدید */
+
+let views =
+localStorage.getItem("views")
+|| 0;
+
+/* محدودیت */
 
 if(views >= 10){
 
     document.body.innerHTML = `
+
     <div style="
     color:white;
     font-size:24px;
     margin-top:100px;
     text-align:center;
     ">
+
     لینک منقضی شده است
+
     </div>
+
     `;
 
 }else{
@@ -197,16 +239,21 @@ if(views >= 10){
 }
 
 /* گرفتن اسم */
-const params = new URLSearchParams(
+
+const params =
+new URLSearchParams(
 window.location.search
 );
 
 let name =
-params.get("name") || "مهمان عزیز";
+params.get("name")
+|| "مهمان عزیز";
 
 /* تایپ سینمایی */
+
 let text =
-"خدمت خانواده محترم " + name;
+"خدمت خانواده محترم "
++ name;
 
 let i = 0;
 
@@ -214,17 +261,24 @@ function typeWriter(){
 
     if(i < text.length){
 
-        document.getElementById(
+        document
+        .getElementById(
         "guestName"
-        ).innerHTML += text.charAt(i);
+        )
+        .innerHTML +=
+        text.charAt(i);
 
         i++;
 
-        setTimeout(typeWriter,70);
+        setTimeout(
+        typeWriter,
+        70
+        );
     }
 }
 
-/* ساخت ذرات */
+/* ذرات */
+
 function createParticles(){
 
     const container =
@@ -240,17 +294,59 @@ function createParticles(){
         );
 
         span.style.left =
-        Math.random()*100 + "vw";
+        Math.random()*100
+        + "vw";
 
         span.style.animationDuration =
-        (5 + Math.random()*5) + "s";
+        (5 + Math.random()*5)
+        + "s";
 
         span.style.opacity =
         Math.random();
 
-        container.appendChild(span);
+        container.appendChild(
+        span
+        );
     }
 }
+
+/* پنل مخفی مدیر */
+
+let tapCount = 0;
+
+document
+.getElementById("adminLogo")
+.addEventListener("click", () => {
+
+    tapCount++;
+
+    if(tapCount >= 7){
+
+        let pass =
+        prompt("رمز مدیریت");
+
+        if(pass === "Amin2000"){
+
+            localStorage.removeItem(
+            "views"
+            );
+
+            alert(
+            "شمارنده ریست شد"
+            );
+
+        }else{
+
+            alert(
+            "رمز اشتباه است"
+            );
+        }
+
+        tapCount = 0;
+    }
+});
+
+/* شروع */
 
 window.onload = () => {
 
@@ -262,15 +358,17 @@ window.onload = () => {
 
     },1000);
 
-    /* شروع ویدیو */
     setTimeout(() => {
 
-        document.getElementById(
+        document
+        .getElementById(
         "video"
-        ).play();
+        )
+        .play();
 
     },5000);
 };
+
 </script>
 
 </body>
