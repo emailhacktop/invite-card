@@ -3,86 +3,126 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>کارت دعوت</title>
+<title>دعوتنامه عروسی</title>
 
 <style>
 body{
     margin:0;
-    background: radial-gradient(circle at top, #1a1a1a, #000);
-    color:white;
-    font-family:tahoma;
-    text-align:center;
+    background:black;
     overflow:hidden;
+    font-family:tahoma;
+    color:white;
+    text-align:center;
 }
 
-.container{
-    position:relative;
-    top:40px;
+/* افکت ورود کل صفحه */
+.scene{
+    opacity:0;
+    transform:scale(1.1);
+    animation:sceneIn 2s forwards;
 }
 
+@keyframes sceneIn{
+    to{
+        opacity:1;
+        transform:scale(1);
+    }
+}
+
+/* اسم طلایی */
 .name{
-    font-size:38px;
+    font-size:42px;
     font-weight:bold;
-    color:#ffd700;
-    margin-bottom:20px;
+    margin-top:60px;
+    color:gold;
+    text-shadow:0 0 15px gold, 0 0 30px orange;
     opacity:0;
     transform:translateY(-20px);
-    animation:fadeIn 2s forwards;
+    animation:fadeName 2s 1s forwards;
 }
 
-.subtitle{
-    font-size:18px;
-    color:#ccc;
-    margin-bottom:20px;
-    opacity:0;
-    animation:fadeIn 2.5s forwards;
-}
-
-video{
-    width:90%;
-    max-width:700px;
-    border-radius:20px;
-    box-shadow:0 0 25px rgba(255,215,0,0.3);
-    opacity:0;
-    animation:fadeIn 3s forwards;
-}
-
-@keyframes fadeIn{
+@keyframes fadeName{
     to{
         opacity:1;
         transform:translateY(0);
     }
+}
+
+/* زیرنویس */
+.sub{
+    margin-top:10px;
+    color:#ccc;
+    font-size:18px;
+    opacity:0;
+    animation:fadeSub 2s 2s forwards;
+}
+
+@keyframes fadeSub{
+    to{opacity:1;}
+}
+
+/* ویدیو */
+video{
+    width:95%;
+    max-width:700px;
+    margin-top:30px;
+    border-radius:20px;
+    box-shadow:0 0 40px rgba(255,215,0,0.2);
+    opacity:0;
+    animation:fadeVideo 2s 3s forwards;
+}
+
+@keyframes fadeVideo{
+    to{opacity:1;}
+}
+
+/* overlay شروع سینمایی */
+.overlay{
+    position:fixed;
+    top:0;left:0;
+    width:100%;
+    height:100%;
+    background:black;
+    z-index:10;
+    animation:fadeOutOverlay 3s forwards;
+}
+
+@keyframes fadeOutOverlay{
+    0%{opacity:1;}
+    100%{opacity:0; visibility:hidden;}
 }
 </style>
 </head>
 
 <body>
 
-<div class="container">
+<div class="overlay"></div>
+
+<div class="scene">
 
     <div class="name" id="guestName"></div>
 
-    <div class="subtitle">شما به مراسم ما دعوت هستید</div>
+    <div class="sub">به مراسم باشکوه ما خوش آمدید</div>
 
-    <video autoplay controls>
+    <video id="video" controls>
         <source src="Kart_davat.mp4" type="video/mp4">
     </video>
 
 </div>
 
 <script>
-// گرفتن اسم از لینک
 const params = new URLSearchParams(window.location.search);
-let name = params.get("name");
+let name = params.get("name") || "مهمان عزیز";
 
-// اگر اسم نبود
-if(!name){
-    name = "مهمان عزیز";
-}
-
-// نمایش متن
 document.getElementById("guestName").innerText =
 "خدمت خانواده " + name;
+
+// شروع ویدیو با تأخیر سینمایی
+window.onload = () => {
+    setTimeout(() => {
+        document.getElementById("video").play();
+    }, 3500);
+};
 </script>
 
 </body>
