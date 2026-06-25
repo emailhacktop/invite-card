@@ -1,289 +1,146 @@
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
-
 <head>
-
 <meta charset="UTF-8">
-
-<meta name="viewport"
-content="width=device-width, initial-scale=1.0">
-
-<title>تولید لینک مهمانان</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>مدیریت مهمان‌ها</title>
 
 <style>
-
 body{
-
 font-family:tahoma;
-
 background:#111;
-
 color:white;
-
 padding:20px;
-
-}
-
-h1{
-
-text-align:center;
-
-color:gold;
-
 }
 
 .card{
-
 border:1px solid #333;
-
 padding:15px;
-
 margin:10px 0;
-
 border-radius:10px;
-
 background:#1a1a1a;
-
-}
-
-.name{
-
-font-size:18px;
-
-margin-bottom:10px;
-
-color:#FFD700;
-
-}
-
-.link{
-
-word-break:break-all;
-
-font-size:13px;
-
-color:#ddd;
-
-margin-bottom:10px;
-
 }
 
 button{
-
 padding:8px 15px;
-
 cursor:pointer;
-
 border:none;
-
 border-radius:5px;
-
 background:gold;
-
 font-weight:bold;
-
 }
-
-.topButtons{
-
-margin-bottom:20px;
-
-display:flex;
-
-gap:10px;
-
-flex-wrap:wrap;
-
-}
-
 </style>
-
 </head>
 
 <body>
 
-<h1>
-
-تولید لینک مهمانان
-
-</h1>
-
-<div class="topButtons">
-
-<button onclick="exportCSV()">
-
-دانلود CSV
-
-</button>
-
-<button onclick="copyAll()">
-
-کپی همه لینک ها
-
-</button>
-
-</div>
+<h2>مدیریت لینک مهمان‌ها</h2>
 
 <div id="list"></div>
 
 <script src="guests.js"></script>
 
 <script>
+"use strict";
 
 const BASE_URL =
 "https://emailhacktop.github.io/invite-card/invite.html";
 
-const container =
-document.getElementById(
-"list"
-);
+function safeCSV(value){
 
-let allLinks = "";
+value = String(value);
 
-for(
-const id in guests
+if(
+value.startsWith("=") ||
+value.startsWith("+") ||
+value.startsWith("-") ||
+value.startsWith("@")
 ){
+return "'" + value;
+}
 
-const guest =
-guests[id];
+return value;
+}
+
+const container =
+document.getElementById("list");
+
+for(const id in guests){
+
+const guest = guests[id];
 
 const link =
 BASE_URL +
-"?id=" +
-id +
-"&token=" +
-guest.token;
+"?id=" + encodeURIComponent(id) +
+"&token=" + encodeURIComponent(guest.token);
 
-allLinks +=
-guest.name +
-"\n" +
-link +
-"\n\n";
+const card =
+document.createElement("div");
 
-const div =
-document.createElement(
-"div"
-);
+card.className = "card";
 
-div.className =
-"card";
+const title =
+document.createElement("div");
 
-div.innerHTML = `
+title.textContent = guest.name;
 
-<div class="name">
+const linkBox =
+document.createElement("div");
 
-${guest.name}
+linkBox.textContent = link;
 
-</div>
+const btn =
+document.createElement("button");
 
-<div class="link">
+btn.textContent = "کپی لینک";
 
-${link}
+btn.onclick = ()=>{
 
-</div>
+navigator.clipboard.writeText(link);
 
-<button
-onclick="copyLink('${link}')">
+alert("کپی شد");
+};
 
-کپی لینک
+card.appendChild(title);
+card.appendChild(linkBox);
+card.appendChild(btn);
 
-</button>
-
-`;
-
-container.appendChild(
-div
-);
-
-}
-
-function copyLink(link){
-
-navigator.clipboard
-.writeText(link);
-
-alert(
-"لینک کپی شد"
-);
-
-}
-
-function copyAll(){
-
-navigator.clipboard
-.writeText(
-allLinks
-);
-
-alert(
-"همه لینک ها کپی شد"
-);
-
+container.appendChild(card);
 }
 
 function exportCSV(){
 
-let csv =
-"ID,NAME,TOKEN\n";
+let csv = "ID,NAME,TOKEN\n";
 
-for(
-const id in guests
-){
+for(const id in guests){
 
 csv +=
-
-id + "," +
-
-guests[id].name + "," +
-
-guests[id].token +
-
-"\n";
-
+safeCSV(id) + "," +
+safeCSV(guests[id].name) + "," +
+safeCSV(guests[id].token) + "\n";
 }
 
 const blob =
 new Blob(
-
 [csv],
-
-{
-type:
-"text/csv;charset=utf-8;"
-}
-
+{type:"text/csv;charset=utf-8;"}
 );
 
 const url =
-URL.createObjectURL(
-blob
-);
+URL.createObjectURL(blob);
 
 const a =
-document.createElement(
-"a"
-);
+document.createElement("a");
 
 a.href = url;
 
-a.download =
-"guests.csv";
-
-document.body
-.appendChild(a);
+a.download = "guests.csv";
 
 a.click();
 
-a.remove();
-
-URL.revokeObjectURL(
-url
-);
-
+URL.revokeObjectURL(url);
 }
-
 </script>
 
 </body>
-
 </html>

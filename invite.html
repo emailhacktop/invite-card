@@ -1,874 +1,379 @@
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
-
 <head>
-
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<meta name="viewport"
-content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Content-Security-Policy"
+content="
+default-src 'self';
+img-src 'self' data:;
+media-src 'self';
+style-src 'self' 'unsafe-inline';
+script-src 'self' 'unsafe-inline';
+font-src 'self';
+">
 
 <title>دعوتنامه اختصاصی</title>
 
 <style>
-
-/* =========================
-   فونت ها
-========================= */
-
-@font-face{
-
-font-family:'Vazirmatn';
-
-src:url('Vazirmatn-Regular.woff2');
-
-}
-
-@font-face{
-
-font-family:'IranNastaliq';
-
-src:url('IranNastaliq.ttf');
-
-}
-
-/* =========================
-   تنظیمات اصلی
-========================= */
-
 *{
-
 box-sizing:border-box;
-
 margin:0;
-
 padding:0;
-
 }
 
-html,
-body{
-
+html,body{
 width:100%;
-
-height:100%;
-
+min-height:100%;
 overflow-x:hidden;
-
-font-family:'Vazirmatn',Tahoma,sans-serif;
-
+font-family:Tahoma,sans-serif;
 background:
-radial-gradient(
-circle at top,
-#3b2a00,
-#000000 60%
-);
-
+radial-gradient(circle at top,#3b2a00,#000000 60%);
 color:white;
-
 text-align:center;
-
 }
-
-/* =========================
-   قاب طلایی
-========================= */
 
 body::before{
-
 content:"";
-
 position:fixed;
-
 top:10px;
 left:10px;
 right:10px;
 bottom:10px;
-
 border:3px solid #D4AF37;
-
 border-radius:25px;
-
 pointer-events:none;
-
 box-shadow:
-
 0 0 10px #D4AF37,
-
-0 0 30px rgba(
-212,
-175,
-55,
-0.5
-);
-
+0 0 30px rgba(212,175,55,.5);
 z-index:999;
-
 }
 
-/* =========================
-   صفحه ورود
-========================= */
-
 #intro{
-
 position:fixed;
-
 inset:0;
-
 background:black;
-
 display:flex;
-
 justify-content:center;
-
 align-items:center;
-
 flex-direction:column;
-
 z-index:5000;
-
+transition:opacity 1s ease;
 }
 
 .introTitle{
-
-font-size:34px;
-
+font-size:clamp(26px,5vw,38px);
 color:#D4AF37;
-
 margin-bottom:20px;
-
 }
 
 .introSub{
-
-font-size:20px;
-
+font-size:clamp(16px,3vw,22px);
 color:white;
-
 }
 
-/* =========================
-   ذرات طلایی
-========================= */
-
 .particles{
-
 position:fixed;
-
-top:0;
-left:0;
-
-width:100%;
-height:100%;
-
+inset:0;
 pointer-events:none;
-
 overflow:hidden;
-
 }
 
 .particles span{
-
 position:absolute;
-
 width:5px;
-
 height:5px;
-
 background:#FFD700;
-
 border-radius:50%;
-
 box-shadow:
-
 0 0 10px #FFD700,
-
 0 0 20px #FFD700;
-
 animation:floatUp linear infinite;
-
 }
 
 @keyframes floatUp{
-
 from{
-
-transform:
-translateY(100vh);
-
+transform:translateY(100vh);
 opacity:0;
-
 }
-
-20%{
-
-opacity:1;
-
-}
-
+20%{opacity:1;}
 to{
-
-transform:
-translateY(-20vh);
-
+transform:translateY(-20vh);
 opacity:0;
-
 }
-
 }
-
-/* =========================
-   نام مهمان
-========================= */
 
 .name{
-
 margin-top:70px;
-
-min-height:80px;
-
-font-family:'IranNastaliq';
-
-font-size:52px;
-
+min-height:90px;
+padding:0 15px;
+line-height:1.9;
+font-size:clamp(28px,8vw,56px);
 color:#FFD700;
-
 text-shadow:
-
 0 0 10px #FFD700,
-
 0 0 20px #FFD700,
-
-0 0 40px rgba(
-255,
-215,
-0,
-0.8
-);
-
+0 0 40px rgba(255,215,0,.8);
+animation:goldGlow 2s infinite alternate;
+word-break:break-word;
 }
 
-/* =========================
-   متن دعوت
-========================= */
+@keyframes goldGlow{
+from{
+text-shadow:
+0 0 10px #FFD700,
+0 0 20px #FFD700;
+}
+to{
+text-shadow:
+0 0 15px #fff,
+0 0 30px #FFD700,
+0 0 50px rgba(255,215,0,.9);
+}
+}
 
 .sub{
-
 margin-top:20px;
-
-font-size:18px;
-
+font-size:clamp(15px,3vw,19px);
 line-height:2;
-
 padding:0 20px;
-
 opacity:0;
-
-animation:
-showSub 2s 3s forwards;
-
+animation:showSub 2s 3s forwards;
 }
 
 @keyframes showSub{
-
-to{
-
-opacity:1;
-
+to{opacity:1;}
 }
-
-}
-
-/* =========================
-   ویدیو
-========================= */
 
 video{
-
-width:95%;
-
+width:94%;
 max-width:700px;
-
 margin-top:30px;
-
 border-radius:20px;
-
 opacity:0;
-
-animation:
-showVideo 2s 5s forwards;
-
+animation:showVideo 2s 5s forwards;
 box-shadow:
-
-0 0 20px rgba(
-255,
-215,
-0,
-0.2
-),
-
-0 0 50px rgba(
-255,
-215,
-0,
-0.3
-);
-
+0 0 20px rgba(255,215,0,.2),
+0 0 50px rgba(255,215,0,.3);
+background:black;
 }
 
 @keyframes showVideo{
-
-to{
-
-opacity:1;
-
+to{opacity:1;}
 }
-
-}
-
-/* =========================
-   لوگو مدیریت
-========================= */
 
 .signature{
-
 position:fixed;
-
-bottom:10px;
-
+bottom:12px;
 right:15px;
-
 font-size:11px;
-
-color:rgba(
-255,
-255,
-255,
-0.20
-);
-
+color:rgba(255,255,255,.22);
 cursor:pointer;
-
 user-select:none;
-
 z-index:9999;
-
+letter-spacing:1px;
 }
 
-</style>
-
-</head>
-
-<body>
-
-<!-- صفحه خوش آمد -->
-
-<div id="intro">
-
-<div class="introTitle">
-
-به نام ایزد مهرآفرین
-
-</div>
-
-<div class="introSub">
-
-دعوتنامه اختصاصی
-
-</div>
-
-</div>
-
-<!-- ذرات -->
-
-<div
-class="particles"
-id="particles">
-</div>
-
-<!-- نام مهمان -->
-
-<div
-class="name"
-id="guestName">
-</div>
-
-<!-- متن -->
-
-<div class="sub">
-
-با نهایت احترام
-
-حضور گرم شما را در این مراسم
-
-ارج می‌نهیم و مشتاق دیدار شما هستیم.
-
-</div>
-
-<!-- ویدیو -->
-
-<video
-id="video"
-controls
-playsinline
-preload="auto">
-
-<source
-src="Kart_davat.mp4"
-type="video/mp4">
-
-</video>
-
-<!-- لوگوی مدیریت -->
-
-<div
-class="signature"
-id="adminLogo">
-
-AminSystem2000
-
-</div>
-
-<!-- فایل مهمانان -->
-
-<script src="guests.js"></script>
-
-<script>
-/* =========================
-   رمز مدیریت
-========================= */
-
-const ADMIN_HASH =
-"QW1pbjIwMDA=";
-
-/* =========================
-   دریافت پارامترها
-========================= */
-
-const params =
-new URLSearchParams(
-window.location.search
-);
-
-const guestId =
-params.get("id");
-
-const guestToken =
-params.get("token");
-
-/* =========================
-   بررسی فایل مهمانان
-========================= */
-
-if(
-typeof guests === "undefined"
-){
-
-document.body.innerHTML=`
-
-<div style="
-height:100vh;
-display:flex;
-justify-content:center;
-align-items:center;
-font-size:24px;
-">
-
-خطا در بارگذاری guests.js
-
-</div>
-
-`;
-
-throw new Error(
-"guests.js not loaded"
-);
-
-}
-
-/* =========================
-   بررسی وجود مهمان
-========================= */
-
-if(
-!guestId ||
-!guests[guestId]
-){
-
-document.body.innerHTML=`
-
-<div style="
-height:100vh;
-display:flex;
-justify-content:center;
-align-items:center;
-flex-direction:column;
-font-size:24px;
-">
-
-با عرض پوزش
-
-<br><br>
-
-در لیست میهمانان نبوده اید
-
-</div>
-
-`;
-
-throw new Error(
-"Guest Not Found"
-);
-
-}
-
-/* =========================
-   بررسی توکن
-========================= */
-
-if(
-guests[guestId].token
-!== guestToken
-){
-
-document.body.innerHTML=`
-
-<div style="
-height:100vh;
-display:flex;
-justify-content:center;
-align-items:center;
-font-size:24px;
-">
-
-دسترسی غیرمجاز
-
-</div>
-
-`;
-
-throw new Error(
-"Invalid Token"
-);
-
-}
-
-/* =========================
-   اطلاعات مهمان
-========================= */
-
-const guestNameValue =
-guests[guestId].name;
-
-/* =========================
-   محدودیت بازدید
-========================= */
-
-const viewKey =
-"views_" + guestId;
-
-let views =
-parseInt(
-localStorage.getItem(
-viewKey
-) || "0"
-);
-
-let expired = false;
-
-if(
-views >= 10
-){
-
-expired = true;
-
-document.body.insertAdjacentHTML(
-
-"beforeend",
-
-`
-
-<div id="expiredMessage"
-
-style="
+#expiredMessage{
 position:fixed;
 inset:0;
-background:rgba(0,0,0,.95);
+background:rgba(0,0,0,.92);
 display:flex;
 justify-content:center;
 align-items:center;
 flex-direction:column;
 text-align:center;
 z-index:3000;
-">
+pointer-events:none;
+}
 
-<div style="
+.expiredTitle{
 font-size:28px;
 color:#FFD700;
-">
-
-لینک منقضی شده است
-
-</div>
-
-<div style="
-margin-top:15px;
-font-size:14px;
-color:#cccccc;
-">
-
-جهت مدیریت روی لوگو
-  کلیک کنید
-
-</div>
-
-</div>
-
-`
-
-);
-
 }
-else{
+</style>
+</head>
 
-localStorage.setItem(
-viewKey,
-views + 1
-);
+<body>
 
+<div id="intro">
+<div class="introTitle">به نام ایزد مهرآفرین</div>
+<div class="introSub">دعوتنامه اختصاصی</div>
+</div>
+
+<div class="particles" id="particles"></div>
+
+<div class="name" id="guestName"></div>
+
+<div class="sub">
+با نهایت احترام حضور گرم شما را در این مراسم ارج می‌نهیم.
+</div>
+
+<video id="video" controls playsinline preload="metadata">
+<source src="Kart_davat.mp4" type="video/mp4">
+</video>
+
+<div class="signature" id="adminLogo">
+AminSystem2000
+</div>
+
+<script src="guests.js"></script>
+
+<script>
+"use strict";
+
+const ADMIN_PASSWORD = "Amin2000";
+
+const params = new URLSearchParams(window.location.search);
+
+const guestId = params.get("id");
+const guestToken = params.get("token");
+
+if(typeof guests === "undefined"){
+document.body.textContent = "خطا در بارگذاری guests.js";
+throw new Error("guests.js missing");
 }
 
-/* =========================
-   افکت تایپ نام مهمان
-========================= */
+if(!guestId || !guests[guestId]){
+document.body.textContent = "مهمان یافت نشد";
+throw new Error("guest missing");
+}
 
-let text =
-"خدمت "
-+ guestNameValue;
+if(guests[guestId].token !== guestToken){
+document.body.textContent = "دسترسی غیرمجاز";
+throw new Error("invalid token");
+}
+
+const guestNameValue = guests[guestId].name;
+
+const viewKey = "views_" + guestId;
+
+let views = parseInt(localStorage.getItem(viewKey) || "0");
+
+let expired = false;
+
+if(views >= 10){
+
+expired = true;
+
+const expiredBox = document.createElement("div");
+expiredBox.id = "expiredMessage";
+
+const title = document.createElement("div");
+title.className = "expiredTitle";
+title.textContent = "لینک منقضی شده است";
+
+expiredBox.appendChild(title);
+
+document.body.appendChild(expiredBox);
+
+}else{
+
+localStorage.setItem(viewKey, views + 1);
+}
+
+const guestName = document.getElementById("guestName");
+
+let text = "خدمت " + guestNameValue;
 
 let index = 0;
 
 function typeWriter(){
 
-if(
-index < text.length
-){
+if(index < text.length){
 
-document
-.getElementById(
-"guestName"
-)
-.textContent +=
-text.charAt(index);
+guestName.textContent += text.charAt(index);
 
 index++;
 
-setTimeout(
-typeWriter,
-80
-);
-
+setTimeout(typeWriter,80);
 }
-
 }
-
-/* =========================
-   ساخت ذرات طلایی
-========================= */
 
 function createParticles(){
 
 const container =
-document.getElementById(
-"particles"
-);
+document.getElementById("particles");
 
-container.innerHTML = "";
-
-for(
-let i=0;
-i<30;
-i++
-){
+for(let i=0;i<30;i++){
 
 const span =
-document.createElement(
-"span"
-);
+document.createElement("span");
 
 span.style.left =
-Math.random()*100
-+ "vw";
+Math.random()*100 + "vw";
 
 span.style.animationDuration =
-(5 + Math.random()*7)
-+ "s";
+(5 + Math.random()*7) + "s";
 
 span.style.opacity =
 Math.random();
 
-container.appendChild(
-span
-);
-
+container.appendChild(span);
 }
-
 }
-
-/* =========================
-   بررسی ویدیو
-========================= */
-
-const video =
-document.getElementById(
-"video"
-);
-
-video.addEventListener(
-
-"error",
-
-()=>{
-
-video.insertAdjacentHTML(
-
-"afterend",
-
-`
-
-<div style="
-margin-top:15px;
-color:#FFD700;
-">
-
-فایل Kart_davat.mp4 یافت نشد
-
-</div>
-
-`
-
-);
-
-}
-
-);
-
-/* =========================
-   پنل مدیریت
-========================= */
 
 let tapCount = 0;
 
 document
-.getElementById(
-"adminLogo"
-)
-.addEventListener(
-
-"click",
-
-()=>{
+.getElementById("adminLogo")
+.addEventListener("click",()=>{
 
 tapCount++;
 
-if(
-tapCount >= 10
-){
+if(tapCount >= 7){
 
 const pass =
-prompt(
-"رمز مدیریت"
-);
+prompt("رمز مدیریت");
 
-if(
+if(pass === ADMIN_PASSWORD){
 
-btoa(pass || "")
-=== ADMIN_HASH
+localStorage.removeItem(viewKey);
 
-){
-
-localStorage.removeItem(
-viewKey
-);
-
-alert(
-"شمارنده بازدید ریست شد"
-);
+alert("ریست شد");
 
 location.reload();
 
-}
-else{
+}else{
 
-alert(
-"رمز اشتباه است"
-);
-
+alert("رمز اشتباه است");
 }
 
 tapCount = 0;
-
 }
-
-}
-
-);
-
-/* =========================
-   شروع برنامه
-========================= */
+});
 
 window.onload = ()=>{
 
 createParticles();
 
-/* صفحه خوش آمد */
-
 setTimeout(()=>{
 
 const intro =
-document.getElementById(
-"intro"
-);
+document.getElementById("intro");
 
-if(intro){
-
-intro.style.opacity="0";
+intro.style.opacity = "0";
 
 setTimeout(()=>{
-
 intro.remove();
-
 },1000);
-
-}
 
 },3000);
 
-if(
-!expired
-){
+if(!expired){
 
-setTimeout(
-typeWriter,
-3500
-);
+setTimeout(typeWriter,3500);
 
 setTimeout(()=>{
-
-video
+document
+.getElementById("video")
 .play()
 .catch(()=>{});
-
 },6000);
-
 }
-
 };
-
 </script>
 
 </body>
-
 </html>
