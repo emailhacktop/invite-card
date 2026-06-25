@@ -7,7 +7,6 @@
 
 <meta name="viewport"
 content="width=device-width, initial-scale=1.0">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline'; font-src 'self'; object-src 'none'; base-uri 'none'">
 
 <title>دعوتنامه اختصاصی</title>
 
@@ -411,7 +410,9 @@ id="guestName">
 
 <video
 id="video"
-controls>
+controls
+playsinline
+preload="auto">
 
 <source
 src="Kart_davat.mp4"
@@ -438,7 +439,8 @@ AminSystem2000
    رمز مدیریت
 ========================= */
 
-const ADMIN_HASH = null; // removed insecure client-side admin password
+const ADMIN_HASH =
+"QW1pbjIwMDA=";
 
 /* =========================
    دریافت پارامترها
@@ -686,7 +688,7 @@ container.innerHTML = "";
 
 for(
 let i=0;
-i<50;
+i<30;
 i++
 ){
 
@@ -781,7 +783,8 @@ prompt(
 
 if(
 
-false
+btoa(pass || "")
+=== ADMIN_HASH
 
 ){
 

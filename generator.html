@@ -1,78 +1,289 @@
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
+
 <head>
+
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline'; object-src 'none'; base-uri 'none'">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
 <title>تولید لینک مهمانان</title>
+
 <style>
-body{font-family:tahoma;background:#111;color:white;padding:20px}
-.card{border:1px solid #333;padding:15px;margin:10px 0;border-radius:10px;background:#1a1a1a}
-.name{font-size:18px;margin-bottom:10px;color:#FFD700}
-.link{word-break:break-all;font-size:13px;color:#ddd;margin-bottom:10px}
-button{padding:8px 15px;cursor:pointer;border:none;border-radius:5px;background:gold;font-weight:bold}
-.topButtons{margin-bottom:20px;display:flex;gap:10px;flex-wrap:wrap}
+
+body{
+
+font-family:tahoma;
+
+background:#111;
+
+color:white;
+
+padding:20px;
+
+}
+
+h1{
+
+text-align:center;
+
+color:gold;
+
+}
+
+.card{
+
+border:1px solid #333;
+
+padding:15px;
+
+margin:10px 0;
+
+border-radius:10px;
+
+background:#1a1a1a;
+
+}
+
+.name{
+
+font-size:18px;
+
+margin-bottom:10px;
+
+color:#FFD700;
+
+}
+
+.link{
+
+word-break:break-all;
+
+font-size:13px;
+
+color:#ddd;
+
+margin-bottom:10px;
+
+}
+
+button{
+
+padding:8px 15px;
+
+cursor:pointer;
+
+border:none;
+
+border-radius:5px;
+
+background:gold;
+
+font-weight:bold;
+
+}
+
+.topButtons{
+
+margin-bottom:20px;
+
+display:flex;
+
+gap:10px;
+
+flex-wrap:wrap;
+
+}
+
 </style>
+
 </head>
+
 <body>
-<h1>تولید لینک مهمانان</h1>
+
+<h1>
+
+تولید لینک مهمانان
+
+</h1>
+
 <div class="topButtons">
-<button id="csvBtn">دانلود CSV</button>
-<button id="copyBtn">کپی همه لینک ها</button>
+
+<button onclick="exportCSV()">
+
+دانلود CSV
+
+</button>
+
+<button onclick="copyAll()">
+
+کپی همه لینک ها
+
+</button>
+
 </div>
+
 <div id="list"></div>
+
 <script src="guests.js"></script>
+
 <script>
-'use strict';
-const BASE_URL = "https://emailhacktop.github.io/invite-card/invite.html";
-const container = document.getElementById("list");
+
+const BASE_URL =
+"https://emailhacktop.github.io/invite-card/invite.html";
+
+const container =
+document.getElementById(
+"list"
+);
+
 let allLinks = "";
 
-function safeText(el, value){ el.textContent = value; }
+for(
+const id in guests
+){
 
-Object.keys(guests).forEach((id)=>{
-  const guest = guests[id];
-  const link = `${BASE_URL}?id=${encodeURIComponent(id)}&token=${encodeURIComponent(guest.token)}`;
-  allLinks += `${guest.name}\n${link}\n\n`;
+const guest =
+guests[id];
 
-  const card = document.createElement('div');
-  card.className='card';
+const link =
+BASE_URL +
+"?id=" +
+id +
+"&token=" +
+guest.token;
 
-  const name = document.createElement('div');
-  name.className='name';
-  safeText(name, guest.name);
+allLinks +=
+guest.name +
+"\n" +
+link +
+"\n\n";
 
-  const linkDiv = document.createElement('div');
-  linkDiv.className='link';
-  safeText(linkDiv, link);
+const div =
+document.createElement(
+"div"
+);
 
-  const btn = document.createElement('button');
-  btn.textContent='کپی لینک';
-  btn.addEventListener('click', async ()=>{
-    await navigator.clipboard.writeText(link);
-    alert('لینک کپی شد');
-  });
+div.className =
+"card";
 
-  card.append(name, linkDiv, btn);
-  container.appendChild(card);
-});
+div.innerHTML = `
 
-document.getElementById('copyBtn').addEventListener('click', async ()=>{
-  await navigator.clipboard.writeText(allLinks);
-  alert('همه لینک ها کپی شد');
-});
+<div class="name">
 
-document.getElementById('csvBtn').addEventListener('click', ()=>{
-  let csv = "ID,NAME,TOKEN\n";
-  Object.keys(guests).forEach((id)=>{
-    csv += `"${id}","${String(guests[id].name).replace(/"/g,'""')}","${guests[id].token}"\n`;
-  });
-  const blob = new Blob([csv], {type:'text/csv;charset=utf-8;'});
-  const a = document.createElement('a');
-  a.href = URL.createObjectURL(blob);
-  a.download = 'guests.csv';
-  a.click();
-});
+${guest.name}
+
+</div>
+
+<div class="link">
+
+${link}
+
+</div>
+
+<button
+onclick="copyLink('${link}')">
+
+کپی لینک
+
+</button>
+
+`;
+
+container.appendChild(
+div
+);
+
+}
+
+function copyLink(link){
+
+navigator.clipboard
+.writeText(link);
+
+alert(
+"لینک کپی شد"
+);
+
+}
+
+function copyAll(){
+
+navigator.clipboard
+.writeText(
+allLinks
+);
+
+alert(
+"همه لینک ها کپی شد"
+);
+
+}
+
+function exportCSV(){
+
+let csv =
+"ID,NAME,TOKEN\n";
+
+for(
+const id in guests
+){
+
+csv +=
+
+id + "," +
+
+guests[id].name + "," +
+
+guests[id].token +
+
+"\n";
+
+}
+
+const blob =
+new Blob(
+
+[csv],
+
+{
+type:
+"text/csv;charset=utf-8;"
+}
+
+);
+
+const url =
+URL.createObjectURL(
+blob
+);
+
+const a =
+document.createElement(
+"a"
+);
+
+a.href = url;
+
+a.download =
+"guests.csv";
+
+document.body
+.appendChild(a);
+
+a.click();
+
+a.remove();
+
+URL.revokeObjectURL(
+url
+);
+
+}
+
 </script>
+
 </body>
+
 </html>
