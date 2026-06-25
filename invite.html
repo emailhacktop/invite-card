@@ -7,6 +7,7 @@
 
 <meta name="viewport"
 content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self'; font-src 'self'; object-src 'none'; base-uri 'none'">
 
 <title>دعوتنامه اختصاصی</title>
 
@@ -437,8 +438,7 @@ AminSystem2000
    رمز مدیریت
 ========================= */
 
-const ADMIN_HASH =
-"QW1pbjIwMDA=";
+const ADMIN_HASH = null; // removed insecure client-side admin password
 
 /* =========================
    دریافت پارامترها
@@ -781,8 +781,7 @@ prompt(
 
 if(
 
-btoa(pass || "")
-=== ADMIN_HASH
+false
 
 ){
 
