@@ -1,1 +1,47 @@
-Ultimate invite placeholder with secure features
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<meta http-equiv="Content-Security-Policy"
+content="
+default-src 'self';
+img-src 'self' data:;
+media-src 'self';
+font-src 'self';
+style-src 'self';
+script-src 'self';
+object-src 'none';
+base-uri 'self';
+form-action 'self';
+frame-ancestors 'none';
+">
+
+<title>دعوتنامه VIP PRO</title>
+
+<link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+
+<div id="guestName" class="name"></div>
+
+<video id="video" controls playsinline preload="metadata">
+<source src="Kart_davat.mp4" type="video/mp4">
+</video>
+
+<div class="signature" id="adminLogo">
+AminSystem2000
+</div>
+
+<div id="expired" class="expired">
+لینک منقضی شده است
+</div>
+
+<script src="guests.js"></script>
+<script src="app.js"></script>
+
+</body>
+</html>
