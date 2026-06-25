@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>پنل مدیریت دعوتنامه</title>
+
+<style>
+body{
+font-family:tahoma;
+background:#101010;
+color:#fff;
+padding:20px;
+}
+.box{
+max-width:1000px;
+margin:auto;
+background:#181818;
+padding:20px;
+border-radius:16px;
+box-shadow:0 0 20px rgba(0,0,0,.4);
+}
+h1{
+text-align:center;
+color:gold;
+margin-bottom:25px;
+}
+.grid{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:10px;
+margin-bottom:15px;
+}
+input{
+padding:12px;
+border:none;
+border-radius:8px;
+background:#222;
+color:#fff;
+}
+button{
+padding:11px 18px;
+border:none;
+border-radius:8px;
+background:gold;
+font-weight:bold;
+cursor:pointer;
+}
+.card{
+background:#202020;
+padding:15px;
+margin-top:12px;
+border-radius:12px;
+}
+.link{
+word-break:break-all;
+font-size:13px;
+margin:8px 0;
+color:#ddd;
+}
+.top{
+display:flex;
+gap:10px;
+flex-wrap:wrap;
+margin-bottom:20px;
+}
+@media(max-width:700px){
+.grid{grid-template-columns:1fr;}
+}
+</style>
+</head>
+
+<body>
+
+<div class="box">
+<h1>پنل مدیریت دعوتنامه</h1>
+
+<div id="loginBox">
+<div class="grid">
+<input type="password" id="pass" placeholder="رمز مدیریت">
+<button onclick="login()">ورود</button>
+</div>
+</div>
+
+<div id="panel" style="display:none">
+
+<div class="grid">
+<input id="guestName" placeholder="نام مهمان">
+<input id="guestId" placeholder="کد مهمان">
+</div>
+
+<div class="top">
+<button onclick="addGuest()">افزودن مهمان</button>
+<button onclick="exportJSON()">دانلود guests.js</button>
+<button onclick="copyAll()">کپی همه لینک ها</button>
+</div>
+
+<div id="list"></div>
+
+</div>
+
+</div>
+
+<script>
+const ADMIN_PASSWORD = "AminSecure2026";
+
+let guests = JSON.parse(localStorage.getItem("inviteGuests") || "{}");
+
+function login(){
+const pass = document.getElementById("pass").value;
+
+if(pass === ADMIN_PASSWORD){
+document.getElementById("loginBox").style.display="none";
+document.getElementById("panel").style.display="block";
+render();
+}else{
+alert("رمز اشتباه است");
+}
+}
+
+function save(){
+localStorage.setItem("inviteGuests",JSON.stringify(guests));
+}
+
+function randomToken(){
+return Math.random().toString(36).substring(2,10).toUpperCase();
+}
+
+function addGuest(){
+const name = document.getElementById("guestName").value.trim();
+const id = document.getElementById("guestId").value.trim();
+
+if(!name || !id){
+alert("اطلاعات ناقص است");
+return;
+}
+
+guests[id] = {
+name,
+token:randomToken()
+};
+
+save();
+render();
+
+document.getElementById("guestName").value="";
+document.getElementById("guestId").value="";
+}
+
+function removeGuest(id){
+if(confirm("حذف شود؟")){
+delete guests[id];
+save();
+render();
+}
+}
+
+function render(){
+
+const list = document.getElementById("list");
+list.innerHTML = "";
+
+let all = "";
+
+Object.keys(guests).forEach(id=>{
+
+const g = guests[id];
+
+const link =
+location.origin +
+location.pathname.replace("admin.html","invite.html") +
+"?id=" + id +
+"&token=" + g.token;
+
+all += g.name + "\n" + link + "\n\n";
+
+const div = document.createElement("div");
+div.className="card";
+
+div.innerHTML = `
+<b>${g.name}</b>
+<div>کد: ${id}</div>
+<div class="link">${link}</div>
+
+<div class="top">
+<button onclick="copyLink('${link}')">کپی لینک</button>
+<button onclick="removeGuest('${id}')">حذف</button>
+</div>
+`;
+
+list.appendChild(div);
+
+});
+
+window.allLinks = all;
+}
+
+function copyLink(link){
+navigator.clipboard.writeText(link);
+alert("کپی شد");
+}
+
+function copyAll(){
+navigator.clipboard.writeText(window.allLinks || "");
+alert("همه لینک ها کپی شد");
+}
+
+function exportJSON(){
+
+const content =
+"const guests = " +
+JSON.stringify(guests,null,2) +
+";";
+
+const blob = new Blob([content],{type:"text/javascript"});
+const a = document.createElement("a");
+
+a.href = URL.createObjectURL(blob);
+a.download = "guests.js";
+
+a.click();
+}
+</script>
+
+</body>
+</html>
