@@ -1,100 +1,97 @@
-const ADMIN_PASSWORD = "Amin2000";
+'use strict';
+
 const params = new URLSearchParams(window.location.search);
-const guestId = params.get("id");
-const guestToken = params.get("token");
-const guestName = document.getElementById("guestName");
-const intro = document.getElementById("intro");
-const expired = document.getElementById("expiredBox");
-function showError(msg) {
-  document.body.innerHTML =
-    '<div style="padding:70px 20px;color:#FFD700;font-size:32px;text-align:center">' +
-    msg +
-    "</div>";
-  throw new Error(msg);
+const guestId = params.get('id');
+const guestToken = params.get('token');
+
+const guestName = document.getElementById('guestName');
+const intro = document.getElementById('intro');
+const expired = document.getElementById('expiredBox');
+
+function showError(message) {
+  document.body.replaceChildren();
+
+  const errorBox = document.createElement('div');
+  errorBox.className = 'expired-box';
+  errorBox.style.display = 'flex';
+
+  const title = document.createElement('div');
+  title.className = 'expired-title';
+  title.textContent = message;
+
+  errorBox.appendChild(title);
+  document.body.appendChild(errorBox);
+
+  throw new Error(message);
 }
-if (typeof guests !== "object") {
-  showError("خطا در بارگذاری فایل مهمان‌ها");
+
+function isValidInput(value) {
+  return typeof value === 'string' && /^[A-Za-z0-9_-]{1,32}$/.test(value);
 }
-if (!guestId || !Object.prototype.hasOwnProperty.call(guests, guestId)) {
-  showError("مهمان یافت نشد");
+
+if (typeof guests !== 'object' || guests === null) {
+  showError('خطا در بارگذاری اطلاعات');
 }
+
+if (!isValidInput(guestId) || !Object.hasOwn(guests, guestId)) {
+  showError('مهمان یافت نشد');
+}
+
+if (!isValidInput(guestToken)) {
+  showError('توکن نامعتبر است');
+}
+
 const guest = guests[guestId];
+
 if (guest.token !== guestToken) {
-  showError("دسترسی غیرمجاز");
+  showError('دسترسی غیرمجاز');
 }
-const viewKey = "views_" + guestId;
-let views = parseInt(localStorage.getItem(viewKey) || "0");
-if (views >= 10) {
-  expired.style.display = "flex";
+
+const viewKey = `views_${guestId}`;
+const maxViews = 10;
+
+const currentViews = Number.parseInt(localStorage.getItem(viewKey) || '0', 10);
+
+if (Number.isNaN(currentViews) || currentViews >= maxViews) {
+  expired.style.display = 'flex';
 } else {
-  localStorage.setItem(viewKey, views + 1);
-  let text = "خدمت " + guest.name;
-  let i = 0;
+  localStorage.setItem(viewKey, String(currentViews + 1));
+
+  const text = `خدمت ${guest.name}`;
+  let index = 0;
+
   function typeWriter() {
-    if (i < text.length) {
-      guestName.textContent += text.charAt(i);
-      i++;
-      setTimeout(typeWriter, 80);
+    if (index < text.length) {
+      guestName.textContent += text.charAt(index);
+      index += 1;
+      window.setTimeout(typeWriter, 80);
     }
   }
-  setTimeout(typeWriter, 3500);
+
+  window.setTimeout(typeWriter, 3500);
 }
-setTimeout(() => {
-  intro.style.opacity = "0";
-  setTimeout(() => {
+
+window.setTimeout(() => {
+  intro.style.opacity = '0';
+
+  window.setTimeout(() => {
     intro.remove();
   }, 1000);
 }, 3000);
+
 function createParticles() {
-  const c = document.getElementById("particles");
-  for (let i = 0; i < 35; i++) {
-    const s = document.createElement("span");
-    s.style.left = Math.random() * 100 + "vw";
-    s.style.animationDuration = 5 + Math.random() * 7 + "s";
-    c.appendChild(s);
+  const container = document.getElementById('particles');
+
+  for (let i = 0; i < 35; i += 1) {
+    const particle = document.createElement('span');
+
+    particle.style.left = `${Math.random() * 100}vw`;
+    particle.style.animationDuration = `${5 + Math.random() * 7}s`;
+
+    container.appendChild(particle);
   }
 }
+
 createParticles();
-let taps = 0;
-document.getElementById("adminLogo").addEventListener("click", () => {
-  taps++;
-  if (taps >= 7) {
-    const pass = prompt("رمز مدیریت");
-    if (pass === ADMIN_PASSWORD) {
-      localStorage.removeItem(viewKey);
-      alert("شمارنده بازدید ریست شد");
-      location.reload();
-    } else {
-      alert("رمز اشتباه است");
-    }
-    taps = 0;
-  }
-});
 
-/* جلوگیری نسبی دانلود */
-
-document.addEventListener(
-"contextmenu",
-(event)=>{
-    event.preventDefault();
-}
-);
-
-document.addEventListener(
-"keydown",
-(event)=>{
-
-    if(
-        event.key === "F12" ||
-
-        (
-            event.ctrlKey &&
-            event.shiftKey &&
-            event.key === "I"
-        )
-    ){
-
-        event.preventDefault();
-    }
-}
-);
+Object.freeze(guests);

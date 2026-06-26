@@ -1,42 +1,46 @@
-<html>
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <link rel="stylesheet" href="style.css" />
-    <title>VIP</title>
-  </head>
-  <body>
-    <div id="intro" class="intro">
-      <div class="intro-title">به نام ایزد مهرآفرین</div>
-      <div class="intro-sub">دعوتنامه اختصاصی</div>
-    </div>
-    <div id="particles" class="particles"></div>
-    <div class="frame"></div>
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta http-equiv="Content-Security-Policy"
+        content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; media-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none'; frame-ancestors 'none'; upgrade-insecure-requests">
+  <meta http-equiv="X-Content-Type-Options" content="nosniff">
+  <meta http-equiv="Referrer-Policy" content="same-origin">
+  <title>VIP Invitation</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div id="intro" class="intro">
+    <div class="intro-title">به نام ایزد مهرآفرین</div>
+    <div class="intro-sub">دعوتنامه اختصاصی</div>
+  </div>
+
+  <div id="particles" class="particles"></div>
+  <div class="frame"></div>
+
+  <main>
     <div id="guestName" class="guest-name"></div>
+
     <div class="welcome-text">
-      با نهایت احترام حضور گرم شما را در این مراسم ارج می‌نهیم و مشتاق دیدار شما
-      هستیم
+      با نهایت احترام حضور گرم شما را در این مراسم ارج می‌نهیم و مشتاق دیدار شما هستیم.
     </div>
+
     <video
-    controls
-    controlsList="
-    nodownload
-    noplaybackrate
-    "
-    disablePictureInPicture
-    playsinline
-    preload="metadata">
-
-    <source
-    src="Kart_davat.mp4"
-    type="video/mp4">
-
+      controls
+      controlsList="nodownload noplaybackrate"
+      disablePictureInPicture
+      playsinline
+      preload="metadata">
+      <source src="Kart_davat.mp4" type="video/mp4">
     </video>
-    <div id="adminLogo" class="admin-logo">AminSystem2000</div>
-    <div id="expiredBox" class="expired-box">
-      <div class="expired-title">لینک منقضی شده است</div>
-    </div>
-    <script src="guests.js"></script>
-    <script src="app.js"></script>
-  </body>
+  </main>
+
+  <div id="expiredBox" class="expired-box">
+    <div class="expired-title">لینک منقضی شده است</div>
+  </div>
+
+  <script src="guests.js" defer></script>
+  <script src="app.js" defer></script>
+</body>
 </html>

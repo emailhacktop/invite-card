@@ -1,3 +1,4 @@
+'use strict';
 const guests = {
 
 "1001":{
@@ -71,3 +72,4 @@ token:"P8A4T6"
 }
 
 };
+Object.freeze(guests);
