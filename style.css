@@ -143,3 +143,22 @@ video {
     transform: translateY(-20vh);
   }
 }
+
+
+/* لوگوی مدیریت جهت ریست مخفی شمارنده بازدید */
+.admin-logo {
+  position: fixed;
+  bottom: 14px;
+  right: 16px;
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.18);
+  cursor: pointer;
+  z-index: 99999;
+  user-select: none;
+  transition: 0.3s;
+}
+
+/* افزایش وضوح لوگو هنگام هاور */
+.admin-logo:hover {
+  color: rgba(255,255,255,0.45);
+}
