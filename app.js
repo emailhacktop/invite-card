@@ -123,8 +123,8 @@ Object.freeze(guests);
 
 
 // سیستم مخفی ریست شمارنده بازدید
-// هش رمز مدیریت Amin2000
-const ADMIN_HASH = '9ff4d6e5e6c624b4a9fdd8f312af753a7a4db2df3d1a4e3c4d5d6a1b9b0e3f12';
+// هش رمز مدیریت A..2
+const ADMIN_HASH = '0e20d849076cdddf5c99d386d6cd51b8c0442b70c406222f77141b07635ce7fc';
 
 // تابع ساخت هش SHA-256
 async function sha256(text) {
