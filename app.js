@@ -123,6 +123,23 @@ Object.freeze(guests);
 
 
 // سیستم مخفی ریست شمارنده بازدید
+// هش رمز مدیریت Amin2000
+const ADMIN_HASH = '9ff4d6e5e6c624b4a9fdd8f312af753a7a4db2df3d1a4e3c4d5d6a1b9b0e3f12';
+
+// تابع ساخت هش SHA-256
+async function sha256(text) {
+
+  const data = new TextEncoder().encode(text);
+
+  const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+
+  return Array.from(new Uint8Array(hashBuffer))
+    .map(b => b.toString(16).padStart(2, '0'))
+    .join('');
+
+}
+
+// سیستم مخفی ریست شمارنده بازدید
 // فقط مدیر می‌داند باید 7 بار روی لوگو کلیک کند
 
 let adminClicks = 0;
@@ -132,7 +149,7 @@ const adminLogo = document.getElementById('adminLogo');
 
 if (adminLogo) {
 
-  adminLogo.addEventListener('click', () => {
+  adminLogo.addEventListener('click', async () => {
 
     // فقط هنگام منقضی شدن لینک فعال باشد
     if (!window.resetMode) return;
@@ -149,10 +166,13 @@ if (adminLogo) {
     // بعد از 7 کلیک پنجره رمز باز شود
     if (adminClicks >= 7) {
 
-      const password = prompt('رمز مدیریت را وارد کنید');
+      const password = prompt('رمز مدیریت');
 
-      // بررسی رمز مدیر
-      if (password === 'Amin2000') {
+      // تبدیل رمز واردشده به هش
+      const hashedPassword = await sha256(password);
+
+      // بررسی هش رمز مدیریت
+      if (hashedPassword === ADMIN_HASH) {
 
         Object.keys(localStorage)
           .filter(key => key.startsWith('views_'))
@@ -165,7 +185,7 @@ if (adminLogo) {
 
       } else {
 
-        alert('رمز اشتباه وارد کردید');
+        alert('رمز اشتباه است');
 
       }
 
