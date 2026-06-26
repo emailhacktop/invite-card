@@ -118,7 +118,7 @@ if (adminLogo) {
 
     // پیام راهنما برای مدیر
     if (adminClicks < 7) {
-      alert('برای ریست روی لوگو بزنید');
+      alert('برای ریست روی لوگو 7 بار بزنید');
     }
 
     clearTimeout(adminTimer);
