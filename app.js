@@ -68,7 +68,15 @@ if (Number.isNaN(currentViews) || currentViews >= maxViews) {
   if (expiredTitle) {
     expiredTitle.innerHTML = `
       لینک منقضی شده است
-      <div style="font-size:5px;opacity:.25;margin-top:8px;">
+//      <div style="font-size:5px;opacity:.25;margin-top:8px;">
+    <div style="
+    font-size:6px !important;
+    line-height:6px !important;
+    opacity:.18;
+    margin-top:8px;
+    transform:scale(.55);
+    transform-origin:center;
+    ">
         برای ریست روی لوگو بزنید
       </div>
     `;
