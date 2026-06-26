@@ -1,1 +1,100 @@
-const ADMIN_PASSWORD='Amin2000';const params=new URLSearchParams(window.location.search);const guestId=params.get('id');const guestToken=params.get('token');const guestName=document.getElementById('guestName');const intro=document.getElementById('intro');const expired=document.getElementById('expiredBox');function showError(msg){document.body.innerHTML='<div style="padding:70px 20px;color:#FFD700;font-size:32px;text-align:center">'+msg+'</div>';throw new Error(msg);}if(typeof guests!=='object'){showError('خطا در بارگذاری فایل مهمان‌ها');}if(!guestId||!Object.prototype.hasOwnProperty.call(guests,guestId)){showError('مهمان یافت نشد');}const guest=guests[guestId];if(guest.token!==guestToken){showError('دسترسی غیرمجاز');}const viewKey='views_'+guestId;let views=parseInt(localStorage.getItem(viewKey)||'0');if(views>=10){expired.style.display='flex';}else{localStorage.setItem(viewKey,views+1);let text='خدمت خانواده محترم '+guest.name;let i=0;function typeWriter(){if(i<text.length){guestName.textContent+=text.charAt(i);i++;setTimeout(typeWriter,80);}}setTimeout(typeWriter,3500);}setTimeout(()=>{intro.style.opacity='0';setTimeout(()=>{intro.remove();},1000);},3000);function createParticles(){const c=document.getElementById('particles');for(let i=0;i<35;i++){const s=document.createElement('span');s.style.left=Math.random()*100+'vw';s.style.animationDuration=(5+Math.random()*7)+'s';c.appendChild(s);}}createParticles();let taps=0;document.getElementById('adminLogo').addEventListener('click',()=>{taps++;if(taps>=7){const pass=prompt('رمز مدیریت');if(pass===ADMIN_PASSWORD){localStorage.removeItem(viewKey);alert('شمارنده بازدید ریست شد');location.reload();}else{alert('رمز اشتباه است');}taps=0;}});
+const ADMIN_PASSWORD = "Amin2000";
+const params = new URLSearchParams(window.location.search);
+const guestId = params.get("id");
+const guestToken = params.get("token");
+const guestName = document.getElementById("guestName");
+const intro = document.getElementById("intro");
+const expired = document.getElementById("expiredBox");
+function showError(msg) {
+  document.body.innerHTML =
+    '<div style="padding:70px 20px;color:#FFD700;font-size:32px;text-align:center">' +
+    msg +
+    "</div>";
+  throw new Error(msg);
+}
+if (typeof guests !== "object") {
+  showError("خطا در بارگذاری فایل مهمان‌ها");
+}
+if (!guestId || !Object.prototype.hasOwnProperty.call(guests, guestId)) {
+  showError("مهمان یافت نشد");
+}
+const guest = guests[guestId];
+if (guest.token !== guestToken) {
+  showError("دسترسی غیرمجاز");
+}
+const viewKey = "views_" + guestId;
+let views = parseInt(localStorage.getItem(viewKey) || "0");
+if (views >= 10) {
+  expired.style.display = "flex";
+} else {
+  localStorage.setItem(viewKey, views + 1);
+  let text = "خدمت " + guest.name;
+  let i = 0;
+  function typeWriter() {
+    if (i < text.length) {
+      guestName.textContent += text.charAt(i);
+      i++;
+      setTimeout(typeWriter, 80);
+    }
+  }
+  setTimeout(typeWriter, 3500);
+}
+setTimeout(() => {
+  intro.style.opacity = "0";
+  setTimeout(() => {
+    intro.remove();
+  }, 1000);
+}, 3000);
+function createParticles() {
+  const c = document.getElementById("particles");
+  for (let i = 0; i < 35; i++) {
+    const s = document.createElement("span");
+    s.style.left = Math.random() * 100 + "vw";
+    s.style.animationDuration = 5 + Math.random() * 7 + "s";
+    c.appendChild(s);
+  }
+}
+createParticles();
+let taps = 0;
+document.getElementById("adminLogo").addEventListener("click", () => {
+  taps++;
+  if (taps >= 7) {
+    const pass = prompt("رمز مدیریت");
+    if (pass === ADMIN_PASSWORD) {
+      localStorage.removeItem(viewKey);
+      alert("شمارنده بازدید ریست شد");
+      location.reload();
+    } else {
+      alert("رمز اشتباه است");
+    }
+    taps = 0;
+  }
+});
+
+/* جلوگیری نسبی دانلود */
+
+document.addEventListener(
+"contextmenu",
+(event)=>{
+    event.preventDefault();
+}
+);
+
+document.addEventListener(
+"keydown",
+(event)=>{
+
+    if(
+        event.key === "F12" ||
+
+        (
+            event.ctrlKey &&
+            event.shiftKey &&
+            event.key === "I"
+        )
+    ){
+
+        event.preventDefault();
+    }
+}
+);

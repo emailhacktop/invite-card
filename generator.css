@@ -1,1 +1,42 @@
-body{background:#111;color:#fff;font-family:tahoma;padding:20px}h1{text-align:center;color:gold}.top-buttons{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:25px}button{padding:9px 16px;border:none;border-radius:6px;background:gold;cursor:pointer;font-weight:bold}.card{background:#1b1b1b;border:1px solid #333;border-radius:12px;padding:15px;margin:12px 0}.name{color:#FFD700;font-size:19px;margin-bottom:10px}.link{word-break:break-all;color:#ddd;font-size:13px;margin-bottom:10px}
+body {
+  background: #111;
+  color: #fff;
+  font-family: tahoma;
+  padding: 20px;
+}
+h1 {
+  text-align: center;
+  color: gold;
+}
+.top-buttons {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 25px;
+}
+button {
+  padding: 9px 16px;
+  border: none;
+  border-radius: 6px;
+  background: gold;
+  cursor: pointer;
+  font-weight: bold;
+}
+.card {
+  background: #1b1b1b;
+  border: 1px solid #333;
+  border-radius: 12px;
+  padding: 15px;
+  margin: 12px 0;
+}
+.name {
+  color: #ffd700;
+  font-size: 19px;
+  margin-bottom: 10px;
+}
+.link {
+  word-break: break-all;
+  color: #ddd;
+  font-size: 13px;
+  margin-bottom: 10px;
+}

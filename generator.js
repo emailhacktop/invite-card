@@ -1,1 +1,66 @@
-const BASE_URL='https://emailhacktop.github.io/invite-card/invite.html';const container=document.getElementById('list');let allLinks='';function safeCSV(v){const t=String(v);if(t.startsWith('=')||t.startsWith('+')||t.startsWith('-')||t.startsWith('@')){return "'"+t;}return t;}for(const id in guests){const g=guests[id];const link=BASE_URL+'?id='+encodeURIComponent(id)+'&token='+encodeURIComponent(g.token);allLinks+=g.name+'\n'+link+'\n\n';const card=document.createElement('div');card.className='card';const name=document.createElement('div');name.className='name';name.textContent=g.name;const box=document.createElement('div');box.className='link';box.textContent=link;const btn=document.createElement('button');btn.textContent='کپی لینک';btn.onclick=()=>{navigator.clipboard.writeText(link);alert('لینک کپی شد');};card.appendChild(name);card.appendChild(box);card.appendChild(btn);container.appendChild(card);}document.getElementById('copyAllBtn').onclick=()=>{navigator.clipboard.writeText(allLinks);alert('همه لینک‌ها کپی شد');};document.getElementById('csvBtn').onclick=()=>{let csv='\uFEFFID,NAME,TOKEN\n';for(const id in guests){csv+=safeCSV(id)+','+safeCSV(guests[id].name)+','+safeCSV(guests[id].token)+'\n';}const blob=new Blob([csv],{type:'text/csv;charset=utf-8;'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download='guests.csv';a.click();URL.revokeObjectURL(url);};
+const BASE_URL = "https://emailhacktop.github.io/invite-card/invite.html";
+const container = document.getElementById("list");
+let allLinks = "";
+function safeCSV(v) {
+  const t = String(v);
+  if (
+    t.startsWith("=") ||
+    t.startsWith("+") ||
+    t.startsWith("-") ||
+    t.startsWith("@")
+  ) {
+    return "'" + t;
+  }
+  return t;
+}
+for (const id in guests) {
+  const g = guests[id];
+  const link =
+    BASE_URL +
+    "?id=" +
+    encodeURIComponent(id) +
+    "&token=" +
+    encodeURIComponent(g.token);
+  allLinks += g.name + "\n" + link + "\n\n";
+  const card = document.createElement("div");
+  card.className = "card";
+  const name = document.createElement("div");
+  name.className = "name";
+  name.textContent = g.name;
+  const box = document.createElement("div");
+  box.className = "link";
+  box.textContent = link;
+  const btn = document.createElement("button");
+  btn.textContent = "کپی لینک";
+  btn.onclick = () => {
+    navigator.clipboard.writeText(link);
+    alert("لینک کپی شد");
+  };
+  card.appendChild(name);
+  card.appendChild(box);
+  card.appendChild(btn);
+  container.appendChild(card);
+}
+document.getElementById("copyAllBtn").onclick = () => {
+  navigator.clipboard.writeText(allLinks);
+  alert("همه لینک‌ها کپی شد");
+};
+document.getElementById("csvBtn").onclick = () => {
+  let csv = "\uFEFFID,NAME,TOKEN\n";
+  for (const id in guests) {
+    csv +=
+      safeCSV(id) +
+      "," +
+      safeCSV(guests[id].name) +
+      "," +
+      safeCSV(guests[id].token) +
+      "\n";
+  }
+  const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = "guests.csv";
+  a.click();
+  URL.revokeObjectURL(url);
+};

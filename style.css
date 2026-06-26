@@ -1,1 +1,145 @@
-body{margin:0;background:radial-gradient(circle at top,#3d2a00,#000 60%);color:#fff;text-align:center;font-family:tahoma;overflow-x:hidden}.intro{position:fixed;inset:0;background:#000;display:flex;flex-direction:column;justify-content:center;align-items:center;z-index:9999;transition:1s}.intro-title{font-size:42px;color:#D4AF37}.intro-sub{font-size:22px}.frame{position:fixed;top:12px;right:12px;left:12px;bottom:12px;border:3px solid #D4AF37;border-radius:24px;pointer-events:none}.guest-name{margin-top:80px;padding:0 18px;font-size:58px;line-height:2.2;color:#FFD700;min-height:100px}.welcome-text{margin-top:10px;padding:0 20px;font-size:18px;line-height:2;max-width:750px;margin:auto;color:#f3f3f3}video{width:94%;max-width:720px;margin-top:30px;border-radius:22px}.admin-logo{position:fixed;bottom:14px;right:16px;font-size:11px;color:rgba(255,255,255,.18);cursor:pointer;z-index:99999}.expired-box{position:fixed;inset:0;display:none;justify-content:center;align-items:center;background:rgba(0,0,0,.93)}.expired-title{font-size:34px;color:#FFD700}.particles{position:fixed;inset:0;pointer-events:none}.particles span{position:absolute;width:5px;height:5px;border-radius:50%;background:#FFD700;box-shadow:0 0 10px #FFD700;animation:floatUp linear infinite}@keyframes floatUp{from{transform:translateY(100vh)}to{transform:translateY(-20vh)}}
+@font-face {
+
+font-family: 'IranNastaliq';
+
+src:
+url('IranNastaliq.ttf')
+format('truetype');
+
+font-display: block;
+}
+
+@font-face {
+
+font-family: 'Vazirmatn';
+
+src:
+url('Vazirmatn-Regular.woff2')
+format('woff2');
+
+font-display: swap;
+}
+
+body {
+  margin: 0;
+  background: radial-gradient(circle at top, #3d2a00, #000 60%);
+  color: #fff;
+  text-align: center;
+  font-family: tahoma;
+  overflow-x: hidden;
+}
+.intro {
+  position: fixed;
+  inset: 0;
+  background: #000;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  transition: 1s;
+}
+.intro-title {
+  font-size: 42px;
+  color: #d4af37;
+}
+.intro-sub {
+  font-size: 22px;
+}
+.frame {
+  position: fixed;
+  top: 12px;
+  right: 12px;
+  left: 12px;
+  bottom: 12px;
+  border: 3px solid #d4af37;
+  border-radius: 24px;
+  pointer-events: none;
+}
+.guest-name{
+
+    margin-top:85px;
+
+    padding:0 18px;
+
+    font-family:
+    'IranNastaliq',
+    serif !important;
+
+    font-weight:normal;
+
+    font-style:normal;
+
+    font-size:
+    clamp(44px,8vw,76px);
+
+    line-height:2.4;
+
+    color:#FFD700;
+
+    min-height:110px;
+
+    word-break:break-word;
+
+    text-shadow:
+    0 0 10px #FFD700,
+    0 0 25px rgba(255,215,0,.8);
+}
+.welcome-text {
+  margin-top: 10px;
+  padding: 0 20px;
+  font-size: 18px;
+  line-height: 2;
+  max-width: 750px;
+  margin: auto;
+  color: #f3f3f3;
+}
+video {
+  width: 94%;
+  max-width: 720px;
+  margin-top: 30px;
+  border-radius: 22px;
+}
+.admin-logo {
+  position: fixed;
+  bottom: 14px;
+  right: 16px;
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.18);
+  cursor: pointer;
+  z-index: 99999;
+}
+.expired-box {
+  position: fixed;
+  inset: 0;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.93);
+}
+.expired-title {
+  font-size: 34px;
+  color: #ffd700;
+}
+.particles {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+}
+.particles span {
+  position: absolute;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #ffd700;
+  box-shadow: 0 0 10px #ffd700;
+  animation: floatUp linear infinite;
+}
+@keyframes floatUp {
+  from {
+    transform: translateY(100vh);
+  }
+  to {
+    transform: translateY(-20vh);
+  }
+}
