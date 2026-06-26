@@ -58,7 +58,25 @@ const maxViews = 10;
 const currentViews = Number.parseInt(localStorage.getItem(viewKey) || '0', 10);
 
 if (Number.isNaN(currentViews) || currentViews >= maxViews) {
+
+  // نمایش حالت منقضی شدن لینک
   expired.style.display = 'flex';
+
+  // متن اصلی منقضی شدن
+  const expiredTitle = document.querySelector('.expired-title');
+
+  if (expiredTitle) {
+    expiredTitle.innerHTML = `
+      لینک منقضی شده است
+      <div style="font-size:11px;opacity:.45;margin-top:8px;">
+        برای ریست روی لوگو بزنید
+      </div>
+    `;
+  }
+
+  // فعال شدن حالت ریست مدیریت
+  window.resetMode = true;
+
 } else {
   localStorage.setItem(viewKey, String(currentViews + 1));
 
@@ -104,7 +122,9 @@ createParticles();
 Object.freeze(guests);
 
 
-// سیستم مخفی ریست شمارنده بازدید با 7 بار کلیک روی لوگو
+// سیستم مخفی ریست شمارنده بازدید
+// فقط مدیر می‌داند باید 7 بار روی لوگو کلیک کند
+
 let adminClicks = 0;
 let adminTimer;
 
@@ -114,28 +134,40 @@ if (adminLogo) {
 
   adminLogo.addEventListener('click', () => {
 
-    adminClicks += 1;
+    // فقط هنگام منقضی شدن لینک فعال باشد
+    if (!window.resetMode) return;
 
-    // پیام راهنما برای مدیر
-    if (adminClicks < 7) {
-      alert('برای ریست روی لوگو 7 بار بزنید');
-    }
+    adminClicks += 1;
 
     clearTimeout(adminTimer);
 
-    // اگر فاصله کلیک‌ها زیاد شود شمارنده ریست می‌شود
+    // اگر فاصله کلیک‌ها زیاد شود شمارنده صفر شود
     adminTimer = setTimeout(() => {
       adminClicks = 0;
     }, 3000);
 
-    // اجرای ریست بازدیدها پس از 7 کلیک
+    // بعد از 7 کلیک پنجره رمز باز شود
     if (adminClicks >= 7) {
 
-      Object.keys(localStorage)
-        .filter(key => key.startsWith('views_'))
-        .forEach(key => localStorage.removeItem(key));
+      const password = prompt('رمز مدیریت را وارد کنید');
 
-      alert('شمارنده بازدید ریست شد');
+      // بررسی رمز مدیر
+      if (password === 'Amin2000') {
+
+        Object.keys(localStorage)
+          .filter(key => key.startsWith('views_'))
+          .forEach(key => localStorage.removeItem(key));
+
+        alert('شمارنده بازدید ریست شد');
+
+        // رفرش صفحه و ورود مجدد
+        location.reload();
+
+      } else {
+
+        alert('رمز اشتباه وارد کردید');
+
+      }
 
       adminClicks = 0;
     }
