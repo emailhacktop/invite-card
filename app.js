@@ -104,9 +104,11 @@ createParticles();
 Object.freeze(guests);
 
 
-// سیستم مخفی ریست شمارنده بازدید با 7 بار کلیک روی لوگو
+// سیستم مخفی ریست شمارنده بازدید
+// فقط مدیر می‌داند که باید 7 بار روی لوگو کلیک کند
 let adminClicks = 0;
 let adminTimer;
+let resetHintShown = false;
 
 const adminLogo = document.getElementById('adminLogo');
 
@@ -116,19 +118,20 @@ if (adminLogo) {
 
     adminClicks += 1;
 
-    // پیام راهنما برای مدیر
-    if (adminClicks < 7) {
-      alert('برای ریست روی لوگو 7 بار بزنید');
-    }
-
     clearTimeout(adminTimer);
 
-    // اگر فاصله کلیک‌ها زیاد شود شمارنده ریست می‌شود
+    // اگر بین کلیک‌ها فاصله زیاد شود شمارنده صفر می‌شود
     adminTimer = setTimeout(() => {
       adminClicks = 0;
     }, 3000);
 
-    // اجرای ریست بازدیدها پس از 7 کلیک
+    // فقط یک‌بار پیام راهنما نمایش داده می‌شود
+    if (!resetHintShown) {
+      alert('برای ریست روی لوگو بزنید');
+      resetHintShown = true;
+    }
+
+    // ریست بازدیدها پس از 7 کلیک مخفی
     if (adminClicks >= 7) {
 
       Object.keys(localStorage)
