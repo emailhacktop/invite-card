@@ -94,13 +94,6 @@ if (Number.isNaN(currentViews) || currentViews >= maxViews) {
   window.setTimeout(typeWriter, 3500);
 }
 
-window.setTimeout(() => {
-  intro.style.opacity = '0';
-
-  window.setTimeout(() => {
-    intro.remove();
-  }, 1000);
-}, 3000);
 
 // ساخت افکت ذرات و برف پس‌زمینه
 function createParticles() {
@@ -195,3 +188,66 @@ if (adminLogo) {
   });
 
 }
+
+/* ==========================================================
+   صفحه افتتاحیه (Splash Screen)
+   نویسنده: ChatGPT
+
+   این کد فقط هنگام ورود مهمان اجرا می‌شود.
+   بعد از 8 ثانیه قاب محو شده و دعوتنامه اصلی نمایش داده می‌شود.
+========================================================== */
+
+window.addEventListener("load", function () {
+
+    // صفحه افتتاحیه
+    const intro = document.getElementById("intro");
+
+    // فیلم افتتاحیه
+    const video = document.getElementById("introVideo");
+
+    // تصویر جایگزین
+    const image = document.getElementById("introImage");
+
+    // اگر عنصر وجود ندارد یعنی این صفحه Splash ندارد
+    if (!intro) return;
+
+
+    //----------------------------------------------------
+    // اگر فیلم وجود نداشت تصویر نمایش داده شود
+    //----------------------------------------------------
+
+    if (video) {
+
+        video.addEventListener("error", function () {
+
+            video.style.display = "none";
+
+            if (image)
+                image.style.display = "block";
+
+        });
+
+    }
+
+
+    //----------------------------------------------------
+    // بعد از 8 ثانیه صفحه محو شود
+    //----------------------------------------------------
+
+    setTimeout(function () {
+
+        intro.classList.add("hide");
+
+        //------------------------------------------------
+        // بعد از پایان Fade صفحه حذف می‌شود
+        //------------------------------------------------
+
+        setTimeout(function () {
+
+            intro.remove();
+
+        }, 1500);
+
+    }, 8000);
+
+});

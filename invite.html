@@ -11,9 +11,60 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
+  <!--
+  ====================================================
+  صفحه افتتاحیه (Splash Screen)
+  این صفحه قبل از نمایش دعوتنامه اجرا می‌شود.
+  ====================================================
+  -->
+
   <div id="intro" class="intro">
-    <div class="intro-title">به نام ایزد مهرآفرین</div>
-    <div class="intro-sub">دعوتنامه اختصاصی</div>
+
+      <!-- قاب افتتاحیه -->
+      <div class="intro-frame">
+
+          <!-- اگر خواستی فیلم افتتاحیه بگذاری -->
+          <!-- فایل را داخل پوشه assets با نام intro.mp4 قرار بده -->
+          <video
+              id="introVideo"
+              class="intro-video"
+              autoplay
+              muted
+              playsinline
+              preload="auto"
+              loop>
+
+              <source src="assets/intro.mp4" type="video/mp4">
+
+          </video>
+
+          <!-- اگر فیلم وجود نداشت این تصویر نمایش داده می‌شود -->
+          <img
+              id="introImage"
+              class="intro-image"
+              src="assets/intro.jpg"
+              alt="Intro">
+
+          <!-- لایه متن -->
+
+          <div class="intro-overlay">
+
+              <div class="intro-title">
+
+                  به نام ایزد مهرآفرین
+
+              </div>
+
+              <div class="intro-sub">
+
+                  دعوتنامه اختصاصی
+
+              </div>
+
+          </div>
+
+      </div>
+
   </div>
 
   <div id="particles" class="particles"></div>
