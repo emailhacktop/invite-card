@@ -422,3 +422,39 @@ video {
     }
 
 }
+
+/* =====================================================
+   مخفی بودن صفحه اصلی تا پایان Splash
+===================================================== */
+
+main{
+
+    display:none;
+
+}
+
+main.show{
+
+    display:block;
+
+    animation:mainFade .9s ease;
+
+}
+
+@keyframes mainFade{
+
+    from{
+
+        opacity:0;
+        transform:translateY(20px);
+
+    }
+
+    to{
+
+        opacity:1;
+        transform:translateY(0);
+
+    }
+
+}
