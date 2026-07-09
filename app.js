@@ -107,6 +107,37 @@ function typeWriter() {
 
 }
 
+//======================================================
+// تایپ متن خوشامدگویی
+// بعد از پایان نام مهمان اجرا می‌شود
+//======================================================
+
+const originalWelcome = welcomeText.textContent.trim();
+
+welcomeText.textContent = "";
+
+const welcomeMessage =
+"با نهایت احترام حضور گرم شما را در این مراسم ارج می‌نهیم و مشتاق دیدار شما هستیم.";
+
+let welcomeIndex = 0;
+
+
+function welcomeWriter(){
+
+    if(!welcomeText) return;
+
+
+    if(welcomeIndex < welcomeMessage.length){
+
+        welcomeText.textContent += welcomeMessage.charAt(welcomeIndex);
+
+        welcomeIndex++;
+
+        window.setTimeout(welcomeWriter,45);
+
+    }
+
+}
 
 // ساخت افکت ذرات و برف پس‌زمینه
 function createParticles() {
@@ -277,6 +308,12 @@ setTimeout(function () {
         //------------------------------------------------
 
         typeWriter();
+
+        setTimeout(function(){
+
+            welcomeWriter();
+
+        }, (text.length * 80) + 500);
 
         //------------------------------------------------
         // حالا ذرات ساخته شوند
