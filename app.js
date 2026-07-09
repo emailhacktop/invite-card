@@ -78,26 +78,41 @@ if (Number.isNaN(currentViews) || currentViews >= maxViews) {
   window.resetMode = true;
 
 } else {
+
   localStorage.setItem(viewKey, String(currentViews + 1));
 
-  const text = `خدمت ${guest.name}`;
-  let index = 0;
+}
 
-  function typeWriter() {
-    if (index < text.length) {
-      guestName.textContent += text.charAt(index);
-      index += 1;
-      window.setTimeout(typeWriter, 80);
-    }
+
+//======================================================
+// تایپ نام مهمان
+// این تابع بعد از پایان Splash اجرا می‌شود
+//======================================================
+
+const text = `خدمت ${guest.name}`;
+
+let index = 0;
+
+function typeWriter() {
+
+  if (index < text.length) {
+
+    guestName.textContent += text.charAt(index);
+
+    index += 1;
+
+    window.setTimeout(typeWriter, 80);
+
   }
 
- 
 }
 
 
 // ساخت افکت ذرات و برف پس‌زمینه
 function createParticles() {
   const container = document.getElementById('particles');
+
+  if (!container) return;
 
   for (let i = 0; i < 35; i += 1) {
     const particle = document.createElement('span');
@@ -250,8 +265,13 @@ setTimeout(function () {
         // حالا صفحه اصلی نمایش داده شود
         //------------------------------------------------
 
-        document.querySelector("main").classList.add("show");
+        const mainPage = document.querySelector("main");
 
+        if (mainPage) {
+
+            mainPage.classList.add("show");
+
+        }
         //------------------------------------------------
         // حالا تایپ نام مهمان شروع شود
         //------------------------------------------------
