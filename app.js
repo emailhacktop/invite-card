@@ -7,7 +7,7 @@ const guestId = params.get('id');
 const guestToken = params.get('token');
 
 const guestName = document.getElementById('guestName');
-const intro = document.getElementById('intro');
+
 const expired = document.getElementById('expiredBox');
 
 // نمایش خطاهای امنیتی و منقضی شدن لینک
@@ -245,8 +245,6 @@ window.addEventListener("load", function () {
     // صفحه افتتاحیه
     const intro = document.getElementById("intro");
 
-    // فیلم افتتاحیه
-    const video = document.getElementById("introVideo");
 
     // اگر عنصر وجود ندارد یعنی این صفحه Splash ندارد
     if (!intro) return;
