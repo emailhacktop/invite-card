@@ -270,6 +270,15 @@ window.addEventListener("load", function () {
     // صفحه افتتاحیه
     const intro = document.getElementById("intro");
 
+        // اگر لینک منقضی است، اینترو نمایش داده نشود
+    if (window.linkExpired) {
+
+        if (intro) {
+            intro.remove();
+        }
+
+        return;
+    }
 
     // اگر عنصر وجود ندارد یعنی این صفحه Splash ندارد
     if (!intro) return;
@@ -291,10 +300,7 @@ setTimeout(function () {
 
         intro.remove();
         
-        if (window.linkExpired) {
-            return;
-        }
-
+        
         //------------------------------------------------
         // حالا صفحه اصلی نمایش داده شود
         //------------------------------------------------
