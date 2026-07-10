@@ -112,28 +112,25 @@ function typeWriter() {
 // بعد از پایان نام مهمان اجرا می‌شود
 //======================================================
 
+const welcomeText = document.querySelector(".welcome-text");
+
 const originalWelcome = welcomeText.textContent.trim();
 
 welcomeText.textContent = "";
 
-const welcomeMessage =
-"با نهایت احترام حضور گرم شما را در این مراسم ارج می‌نهیم و مشتاق دیدار شما هستیم.";
-
 let welcomeIndex = 0;
-
 
 function welcomeWriter(){
 
     if(!welcomeText) return;
 
+    if(welcomeIndex < originalWelcome.length){
 
-    if(welcomeIndex < welcomeMessage.length){
-
-        welcomeText.textContent += welcomeMessage.charAt(welcomeIndex);
+        welcomeText.textContent += originalWelcome.charAt(welcomeIndex);
 
         welcomeIndex++;
 
-        window.setTimeout(welcomeWriter,45);
+        setTimeout(welcomeWriter,45);
 
     }
 
@@ -251,29 +248,8 @@ window.addEventListener("load", function () {
     // فیلم افتتاحیه
     const video = document.getElementById("introVideo");
 
-    // تصویر جایگزین
-    const image = document.getElementById("introImage");
-
     // اگر عنصر وجود ندارد یعنی این صفحه Splash ندارد
     if (!intro) return;
-
-
-    //----------------------------------------------------
-    // اگر فیلم وجود نداشت تصویر نمایش داده شود
-    //----------------------------------------------------
-
-    if (video) {
-
-        video.addEventListener("error", function () {
-
-            video.style.display = "none";
-
-            if (image)
-                image.style.display = "block";
-
-        });
-
-    }
 
 
     //----------------------------------------------------
