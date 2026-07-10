@@ -6,7 +6,12 @@ const params = new URLSearchParams(window.location.search);
 const guestId = params.get('id');
 const guestToken = params.get('token');
 
+const TYPE_SPEED = 80;  // سرعت تایپ نام مهمان
+
 const guestName = document.getElementById('guestName');
+if (!guestName) {
+  showError('خطا در بارگذاری صفحه');
+}
 
 const expired = document.getElementById('expiredBox');
 
@@ -101,7 +106,7 @@ function typeWriter() {
 
     index += 1;
 
-    window.setTimeout(typeWriter, 80);
+    window.setTimeout(typeWriter, TYPE_SPEED);
 
   }
 
@@ -114,9 +119,13 @@ function typeWriter() {
 
 const welcomeText = document.querySelector(".welcome-text");
 
-const originalWelcome = welcomeText.textContent.trim();
+const originalWelcome = welcomeText
+    ? welcomeText.textContent.trim()
+    : "";
 
-welcomeText.textContent = "";
+if (welcomeText) {
+    welcomeText.textContent = "";
+}
 
 let welcomeIndex = 0;
 
@@ -138,20 +147,23 @@ function welcomeWriter(){
 
 // ساخت افکت ذرات و برف پس‌زمینه
 function createParticles() {
-  const container = document.getElementById('particles');
 
-  if (!container) return;
+    const container = document.getElementById('particles');
 
-  for (let i = 0; i < 35; i += 1) {
-    const particle = document.createElement('span');
+    if (!container) return;
 
-    particle.style.left = `${Math.random() * 100}vw`;
-    particle.style.animationDuration = `${5 + Math.random() * 7}s`;
+    container.textContent = "";
 
-    container.appendChild(particle);
-  }
+    for (let i = 0; i < 35; i++) {
+
+        const particle = document.createElement("span");
+
+        particle.style.left = `${Math.random()*100}vw`;
+        particle.style.animationDuration = `${5+Math.random()*7}s`;
+
+        container.appendChild(particle);
+    }
 }
-
 
 
 // قفل کردن اطلاعات مهمان‌ها برای جلوگیری از دستکاری
@@ -287,7 +299,7 @@ setTimeout(function () {
 
             welcomeWriter();
 
-        }, (text.length * 80) + 500);
+        }, (text.length * TYPE_SPEED) + 500);
 
         //------------------------------------------------
         // حالا ذرات ساخته شوند
