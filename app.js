@@ -52,14 +52,14 @@ if (!isValidInput(guestToken)) {
 
 const guest = guests[guestId];
 
+if (guest.token !== guestToken) {
+  showError('دسترسی غیرمجاز');
+}
+
 const guestCount = document.getElementById('guestCount');
 
 if (guestCount && guest.count) {
-  guestCount.textContent = `دعوت برای ${guest.count} نفر`;
-}
-
-if (guest.token !== guestToken) {
-  showError('دسترسی غیرمجاز');
+    guestCount.textContent = `دعوت برای ${guest.count} نفر`;
 }
 
 // مدیریت شمارنده بازدید هر مهمان
@@ -87,6 +87,8 @@ if (Number.isNaN(currentViews) || currentViews >= maxViews) {
 
   // فعال شدن حالت ریست مدیریت
   window.resetMode = true;
+
+  window.linkExpired = true;
 
 } else {
 
@@ -288,6 +290,10 @@ setTimeout(function () {
     setTimeout(function () {
 
         intro.remove();
+        
+        if (window.linkExpired) {
+            return;
+        }
 
         //------------------------------------------------
         // حالا صفحه اصلی نمایش داده شود
