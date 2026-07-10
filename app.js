@@ -52,6 +52,12 @@ if (!isValidInput(guestToken)) {
 
 const guest = guests[guestId];
 
+const guestCount = document.getElementById('guestCount');
+
+if (guestCount && guest.count) {
+  guestCount.textContent = `دعوت برای ${guest.count} نفر`;
+}
+
 if (guest.token !== guestToken) {
   showError('دسترسی غیرمجاز');
 }
@@ -215,6 +221,11 @@ if (adminLogo) {
     if (adminClicks >= 7) {
 
       const password = prompt('رمز مدیریت');
+
+      if (password === null) {
+        adminClicks = 0;
+        return;
+      }
 
       // تبدیل رمز واردشده به هش
       const hashedPassword = await sha256(password);
