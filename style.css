@@ -380,6 +380,12 @@ body {
 
     }
 
+        .welcome-text{
+        max-width: 310px;
+        font-size: 17px;
+        line-height: 1.9;
+    }
+
 }
 
 /* =====================================================
