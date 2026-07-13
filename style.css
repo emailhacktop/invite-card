@@ -156,9 +156,9 @@ body {
 
     align-items:center;
 
-    background: rgba(65,0,42,.60); /*  طلایی تیره (45, 32, 0, .72);  */
+    background:rgba(15,10,0,.72); /*  طلایی تیره (45, 32, 0, .72);  */
 
-    backdrop-filter:blur(8px);
+    backdrop-filter:blur(10px);
 
     z-index:99999;
 
@@ -235,24 +235,23 @@ body {
     align-items:center;
 
     background:linear-gradient(
-
         rgba(0,0,0,.08),
-
         rgba(0,0,0,.18)
-
     );
 
+    
 }
-
 
 
 /* متن اصلی */
 
 .intro-title{
 
-    color:#fff;
+    font-family:"IranNastaliq";
 
-    font-size:2rem;
+    color:#f5f0df;
+
+    font-size:3.4rem;
 
     font-weight:bold;
 
@@ -260,10 +259,10 @@ body {
 
     opacity:0;
 
-    animation:titleFade 2.5s forwards;
-
+    text-shadow:
+        0 0 25px rgba(195,165,47,.75);
+    animation:introTitle 6s ease forwards;
 }
-
 
 
 /* متن دوم */
@@ -272,17 +271,15 @@ body {
 
     margin-top:18px;
 
-    color:#f5deb3;
+    color:#f6edd4;
 
-    font-size:1.15rem;
+    font-size:1.2rem;
 
     letter-spacing:1px;
 
     opacity:0;
 
-    animation:titleFade 2.5s forwards;
-
-    animation-delay:1.2s;
+    animation:introSub 8s ease forwards;
 
 }
 
@@ -307,29 +304,56 @@ body {
 }
 
 
-
 /* ظاهر شدن متن */
+/* انیمیشن حرکت متن اول صفحه اول به بالا */
+@keyframes introTitle{
 
-@keyframes titleFade{
-
-    from{
-
+    0%{
         opacity:0;
-
-        transform:translateY(18px);
-
+        transform:translateY(80px);
     }
 
-    to{
-
+    20%{
         opacity:1;
-
         transform:translateY(0);
+    }
 
+    45%{
+        opacity:1;
+        transform:translateY(0);
+    }
+
+    100%{
+        opacity:1;
+        transform:translateY(-140px);
     }
 
 }
 
+/* انیمیشن حرکت متن دوم صفحه اول به بالا */
+@keyframes introSub{
+
+    0%{
+        opacity:0;
+        transform:translateY(80px);
+    }
+
+    35%{
+        opacity:1;
+        transform:translateY(0);
+    }
+
+    50%{
+        opacity:1;
+        transform:translateY(0);
+    }
+
+    100%{
+        opacity:1;
+        transform:translateY(-160px);
+    }
+
+}
 
 
 /* محو شدن کل صفحه */
