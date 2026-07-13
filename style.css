@@ -403,13 +403,13 @@ body {
     .intro-title{
         font-size:2.8rem;
         line-height:1.6;
-        top: -10px;  /* برا موبایل ازینجا بالا پایین میکنیم متن را */
+        top: -5px;  /* برا موبایل ازینجا بالا پایین میکنیم متن را */
     }
 
     .intro-sub{
         font-size:1rem;
         margin-top:8px;
-        top: 0px;
+        top: 5px;
     }
 
 
