@@ -64,7 +64,7 @@ if (guestCount && guest.count) {
 
 // مدیریت شمارنده بازدید هر مهمان
 const viewKey = `views_${guestId}`;
-const maxViews = 10;
+const maxViews = 30;
 
 const currentViews = Number.parseInt(localStorage.getItem(viewKey) || '0', 10);
 
