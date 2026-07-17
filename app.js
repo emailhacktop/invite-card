@@ -335,3 +335,25 @@ setTimeout(function () {
 },8000);
 
 });
+
+// جلوگیری از راست کلیک روی ویدیوها
+document.addEventListener("contextmenu", function (e) {
+
+    if (e.target.tagName === "VIDEO") {
+
+        e.preventDefault();
+
+    }
+
+});
+
+// جلوگیری از Drag & Drop ویدیو
+document.querySelectorAll("video").forEach(video => {
+
+    video.addEventListener("dragstart", function (e) {
+
+        e.preventDefault();
+
+    });
+
+});
